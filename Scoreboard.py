@@ -20,8 +20,6 @@ MQTT_TOPIC = "scoreboard"
 messagetxt = "Welcome to the Scoreboard"
 home = "0"
 away = "0"
-clock = datetime.datetime.now()
-
 
 # Define on connect event function
 # We shall subscribe to our Topic in this function
@@ -37,10 +35,23 @@ def on_connect(self, mosq, obj, rc):
 def on_message(mosq, obj, msg):
     print("received  ")
     print(msg.payload)
-    global messagetxt, home, away, clock
+    global messagetxt, home, away, direction, clockvalue, startvalue, starttime, clocktime
     messagetxt = msg.payload.decode("utf-8", "ignore")
-    home, away, clock = messagetxt.split(',')
+    home, away, directionvalue, clockvalue, startvalue = messagetxt.split(',')
+    if clockvalue == "now":
+        clocktime = datetime.datetime.now()
+    else:
+        clocktime = datetime.datetime.strptime(clockvalue, "%M:%S")
 
+    if directionvalue == "down":
+        if startvalue == "now":
+            starttime = datetime.datetime.now()
+        else:
+            starttime = datetime.datetime.strptime(startvalue, "%H:%M:%S")
+
+    direction = directionvalue
+
+    print("home", home, "away", away, "direction", direction, "clocktime", clocktime, "starttime", starttime)
 
 def on_subscribe(mosq, obj, mid, granted_qos):
     print("Subscribed to Topic: " +
@@ -97,22 +108,31 @@ class MatrixDisplay:
     def scroll(self):
 
         offscreen_canvas = self.matrix.CreateFrameCanvas()
-        font = graphics.Font()
-        font.LoadFont("/home/pi/fonts/7x13.bdf")
+        scorefont = graphics.Font()
+        scorefont.LoadFont("/home/pi/fonts/10x20.bdf")
+        clockfont = graphics.Font()
+        clockfont.LoadFont("/home/pi/fonts/8x13.bdf")
         hometextcolour = graphics.Color(255, 255, 255)
-        awaytextcolour = graphics.Color(255, 0, 0)
-        clocktextcolour = graphics.Color(0, 0, 255)
-
-        awayxpos = 37
-        awayypos = 30
-        homexpos = 2
-        homeypos = 30
-        clockxpos = 2
-        clockypos = 15
+        awaytextcolour = graphics.Color(255, 255, 255)
+        clocktextcolour = graphics.Color(255, 0, 0)
+        timertextcolour = graphics.Color(255, 0, 0)
+        awayxpos = 47
+        awayypos = 31
+        homexpos = 12
+        homeypos = 31
+        clockxpos = 0
+        clockypos = 13
+        timerxpos = 0
+        timerypos = 13
 
         home_score = "0"
         away_score = "5"
         clock_text = "welcome"
+        global direction
+        global clocktime
+        global starttime
+        direction = "clock"
+        clocktime = 0
 
 
         # infinite loop
@@ -121,15 +141,28 @@ class MatrixDisplay:
             offscreen_canvas.Clear()
             if away:
                 away_score = away
+                length = graphics.DrawText(offscreen_canvas, scorefont, awayxpos, awayypos, hometextcolour, away_score)
+
             if home:
                 home_score = home
-            if clock == "now":
-                t = datetime.datetime.now()
-                clock_text = t.strftime('%H/%M/%S')
+                length = graphics.DrawText(offscreen_canvas, scorefont, homexpos, homeypos, awaytextcolour, home_score)
 
-            length = graphics.DrawText(offscreen_canvas, font, awayxpos, awayypos, hometextcolour, away_score)
-            length = graphics.DrawText(offscreen_canvas, font, homexpos, homeypos, awaytextcolour, home_score)
-            length = graphics.DrawText(offscreen_canvas, font, clockxpos, clockypos, clocktextcolour, clock_text)
+            if direction == "clock":
+                t = datetime.datetime.now()
+                clock_text = t.strftime('%H:%M:%S')
+                length = graphics.DrawText(offscreen_canvas, clockfont, clockxpos, clockypos, clocktextcolour,
+                                           clock_text)
+            if direction == "down":
+                t = clocktime - (datetime.datetime.now() - starttime)
+                # add if timer < 2 mins pause
+                timer_text = t.strftime('%M:%S')
+                length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
+                                           timer_text)
+
+            if direction == "paused":
+                # add capability to pause and restart the timer
+
+
 
             time.sleep(0.05)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
