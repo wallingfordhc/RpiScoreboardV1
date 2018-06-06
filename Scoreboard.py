@@ -14,11 +14,14 @@ import sys
 MQTT_HOST = "192.168.1.92"
 MQTT_PORT = 1883
 MQTT_KEEPALIVE_INTERVAL = 45
-MQTT_TOPIC = "scoreboard/1"
-messagetxt = "It works!"
+MQTT_TOPIC = "scoreboard"
+messagetxt = "Hello"
+
+
 # Define on connect event function
 # We shall subscribe to our Topic in this function
 def on_connect(self, mosq, obj, rc):
+    print("trying to subscribe")
     mqttc.subscribe(MQTT_TOPIC, 0)
     print("Connect on " + MQTT_HOST)
 
@@ -27,8 +30,10 @@ def on_connect(self, mosq, obj, rc):
 # This function will be invoked every time,
 # a new message arrives for the subscribed topic
 def on_message(mosq, obj, msg):
+    print("received  ")
+    print(msg.payload)
     global messagetxt
-    messagetxt = msg.payload
+    messagetxt = msg.payload.decode("utf-8","ignore")
 
 
 def on_subscribe(mosq, obj, mid, granted_qos):
@@ -86,9 +91,11 @@ class RunText:
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         font = graphics.Font()
         font.LoadFont("/home/pi/fonts/7x13.bdf")
-        textColor = graphics.Color(255, 255, 0)
+        textcolour = graphics.Color(255, 255, 0)
         pos = offscreen_canvas.width
         my_text = self.args.text
+
+
 
         # infinite loop
         while True:
@@ -97,9 +104,9 @@ class RunText:
             if messagetxt:
                 my_text = messagetxt
 
-            len = graphics.DrawText(offscreen_canvas, font, pos, 10, textColor, my_text)
+            length = graphics.DrawText(offscreen_canvas, font, pos, 10, textcolour, my_text)
             pos -= 1
-            if (pos + len < 0):
+            if pos + length < 0:
                 pos = offscreen_canvas.width
 
             time.sleep(0.05)
@@ -127,24 +134,12 @@ class RunText:
         options.pixel_mapper_config = self.args.led_pixel_mapper
         if self.args.led_show_refresh:
             options.show_refresh_rate = 1
-        if self.args.led_slowdown_gpio != None:
+        if self.args.led_slowdown_gpio is not None:
             options.gpio_slowdown = self.args.led_slowdown_gpio
 
         # initialise the matrix
         self.matrix = RGBMatrix(options=options)
 
-        # Initiate MQTT Client
-        mqttc = mqtt.Client()
-
-        # Assign event callbacks
-        mqttc.on_message = on_message
-        mqttc.on_connect = on_connect
-        mqttc.on_subscribe = on_subscribe
-
-        # Connect with MQTT Broker
-        mqttc.connect(MQTT_HOST, MQTT_PORT, MQTT_KEEPALIVE_INTERVAL)
-        mqttc.loop()
-        print("trying to connect")
         # call the main part of the program
         try:
             # Start loop
@@ -159,5 +154,13 @@ class RunText:
 
 # Main function
 if __name__ == "__main__":
+    mqttc = mqtt.Client()
+    # Assign event callbacks
+    mqttc.on_message = on_message
+    mqttc.on_connect = on_connect
+    mqttc.on_subscribe = on_subscribe
+    # Connect with MQTT Broker
+    mqttc.connect(MQTT_HOST, MQTT_PORT, MQTT_KEEPALIVE_INTERVAL)
+    mqttc.loop_start()
     run_text = RunText()
     run_text.process()
