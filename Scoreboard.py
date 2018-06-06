@@ -18,8 +18,8 @@ MQTT_PORT = 1883
 MQTT_KEEPALIVE_INTERVAL = 45
 MQTT_TOPIC = "scoreboard"
 messagetxt = "Welcome to the Scoreboard"
-home = 0
-away = 0
+home = "0"
+away = "0"
 clock = datetime.datetime.now()
 
 
@@ -42,7 +42,6 @@ def on_message(mosq, obj, msg):
     home, away, clock = messagetxt.split(',')
 
 
-
 def on_subscribe(mosq, obj, mid, granted_qos):
     print("Subscribed to Topic: " +
           MQTT_TOPIC + " with QoS: " + str(granted_qos))
@@ -50,7 +49,7 @@ def on_subscribe(mosq, obj, mid, granted_qos):
 
 class MatrixDisplay:
 
-    #Initialise and get arguments
+    # Initialise and get arguments
     def __init__(self, *args, **kwargs):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument("-t", "--text", help="The text to scroll on the RGB LED panel", default="Hello world!")
@@ -100,56 +99,41 @@ class MatrixDisplay:
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         font = graphics.Font()
         font.LoadFont("/home/pi/fonts/7x13.bdf")
-        textcolour = graphics.Color(255, 255, 255)
-        pos = offscreen_canvas.width
-        my_text = self.args.text
-        imgfile = "/home/pi/img1.jpg"
+        hometextcolour = graphics.Color(255, 255, 255)
+        awaytextcolour = graphics.Color(255, 0, 0)
+        clocktextcolour = graphics.Color(0, 0, 255)
 
-        if imgfile:
-            while True:
-                image= Image.open(imgfile)
-                image.thumbnail
-                image.thumbnail((self.matrix.width, self.matrix.height), Image.ANTIALIAS)
-                self.matrix.SetImage(image.convert('RGB'))
-        else:
+        awayxpos = 37
+        awayypos = 30
+        homexpos = 2
+        homeypos = 30
+        clockxpos = 2
+        clockypos = 15
 
-            #infinite loop
-            while True:
-                # clear the offscreen canvas
-                offscreen_canvas.Clear()
-                if away:
-                    my_text = away
+        home_score = "0"
+        away_score = "5"
+        clock_text = "welcome"
 
-                length = graphics.DrawText(offscreen_canvas, font, pos, 10, textcolour, my_text)
-                pos -= 1
-                if pos + length < 0:
-                    pos = offscreen_canvas.width
-
-                time.sleep(0.05)
-                offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
-
-    def scoreboard(self):
-        offscreen_canvas = self.matrix.CreateFrameCanvas()
-        font = graphics.Font()
-        font.LoadFont("/home/pi/fonts/7x13.bdf")
-        textcolour = graphics.Color(255, 255, 255)
-        pos = offscreen_canvas.width
-        my_text = self.args.text
 
         # infinite loop
         while True:
             # clear the offscreen canvas
             offscreen_canvas.Clear()
             if away:
-                my_text = away
+                away_score = away
+            if home:
+                home_score = home
+            if clock == "now":
+                t = datetime.datetime.now()
+                clock_text = t.strftime('%H/%M/%S')
 
-            length = graphics.DrawText(offscreen_canvas, font, pos, 10, textcolour, my_text)
-            pos -= 1
-            if pos + length < 0:
-                pos = offscreen_canvas.width
+            length = graphics.DrawText(offscreen_canvas, font, awayxpos, awayypos, hometextcolour, away_score)
+            length = graphics.DrawText(offscreen_canvas, font, homexpos, homeypos, awaytextcolour, home_score)
+            length = graphics.DrawText(offscreen_canvas, font, clockxpos, clockypos, clocktextcolour, clock_text)
 
             time.sleep(0.05)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
+
 
     def Setup(self):
         # set up the matrix configuration based on the run time arguments
