@@ -6,6 +6,7 @@
 import paho.mqtt.client as mqtt
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 from rgbmatrix import graphics
+from PIL import Image
 import time
 import datetime
 import argparse
@@ -94,16 +95,46 @@ class MatrixDisplay:
                                  default=8, type=int)
 
     # define the main part of the program
-    def run(self):
+    def scroll(self):
 
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         font = graphics.Font()
         font.LoadFont("/home/pi/fonts/7x13.bdf")
-        textcolour = graphics.Color(255, 255, 0)
+        textcolour = graphics.Color(255, 255, 255)
         pos = offscreen_canvas.width
         my_text = self.args.text
+        imgfile = "/home/pi/img1.jpg"
 
+        if imgfile:
+            while True:
+                image= Image.open(imgfile)
+                image.thumbnail
+                image.thumbnail((self.matrix.width, self.matrix.height), Image.ANTIALIAS)
+                self.matrix.SetImage(image.convert('RGB'))
+        else:
 
+            #infinite loop
+            while True:
+                # clear the offscreen canvas
+                offscreen_canvas.Clear()
+                if away:
+                    my_text = away
+
+                length = graphics.DrawText(offscreen_canvas, font, pos, 10, textcolour, my_text)
+                pos -= 1
+                if pos + length < 0:
+                    pos = offscreen_canvas.width
+
+                time.sleep(0.05)
+                offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
+
+    def scoreboard(self):
+        offscreen_canvas = self.matrix.CreateFrameCanvas()
+        font = graphics.Font()
+        font.LoadFont("/home/pi/fonts/7x13.bdf")
+        textcolour = graphics.Color(255, 255, 255)
+        pos = offscreen_canvas.width
+        my_text = self.args.text
 
         # infinite loop
         while True:
@@ -152,7 +183,7 @@ class MatrixDisplay:
         try:
             # Start loop
             print("Press CTRL-C to stop sample")
-            self.run()
+            self.scroll()
         except KeyboardInterrupt:
             print("Exiting\n")
             sys.exit(0)
