@@ -9,42 +9,31 @@ import time
 import argparse
 import sys
 
-
 # Define Variables
 MQTT_HOST = "192.168.1.92"
 MQTT_PORT = 1883
 MQTT_KEEPALIVE_INTERVAL = 45
 MQTT_TOPIC = "scoreboard/1"
-#
 
-try:
-    # Define on connect event function
-    # We shall subscribe to our Topic in this function
-    def on_connect(self,mosq, obj, rc):
-        mqttc.subscribe(MQTT_TOPIC, 0)
-        print("Connect on "+MQTT_HOST)
-    # Define on_message event function.
-    # This function will be invoked every time,
-    # a new message arrives for the subscribed topic
-    def on_message(mosq, obj, msg):
-        global messagetxt
-        messagetxt = msg.payload
+# Define on connect event function
+# We shall subscribe to our Topic in this function
+def on_connect(self, mosq, obj, rc):
+    mqttc.subscribe(MQTT_TOPIC, 0)
+    print("Connect on " + MQTT_HOST)
 
-    def on_subscribe(mosq, obj, mid, granted_qos):
-          print("Subscribed to Topic: " +
+
+# Define on_message event function.
+# This function will be invoked every time,
+# a new message arrives for the subscribed topic
+def on_message(mosq, obj, msg):
+    global messagetxt
+    messagetxt = msg.payload
+
+
+def on_subscribe(mosq, obj, mid, granted_qos):
+    print("Subscribed to Topic: " +
           MQTT_TOPIC + " with QoS: " + str(granted_qos))
 
-
-
-    # Continue monitoring the incoming messages for subscribed topic
-  mqttc.loop_forever()
-
-except KeyboardInterrupt:
-    # here you put any code you want to run before the program
-    # exits when you press CTRL+C
-    GPIO.cleanup()
-#finally:
-    #GPIO.cleanup() # this ensures a clean exit
 
 class RunText:
     def __init__(self, *args, **kwargs):
@@ -102,7 +91,7 @@ class RunText:
 
         # infinite loop
         while True:
-            #clear the offscreen canvas
+            # clear the offscreen canvas
             offscreen_canvas.Clear()
             if messagetxt:
                 my_text = messagetxt
@@ -116,7 +105,7 @@ class RunText:
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
 
     def process(self):
-        #set up the matrix configuration based on the run time arguments
+        # set up the matrix configuration based on the run time arguments
         self.args = self.parser.parse_args()
 
         options = RGBMatrixOptions()
@@ -143,7 +132,6 @@ class RunText:
         # initialise the matrix
         self.matrix = RGBMatrix(options=options)
 
-
         # Initiate MQTT Client
         mqttc = mqtt.Client()
 
@@ -155,7 +143,7 @@ class RunText:
         # Connect with MQTT Broker
         mqttc.connect(MQTT_HOST, MQTT_PORT, MQTT_KEEPALIVE_INTERVAL)
 
-        #call the main part of the program
+        # call the main part of the program
         try:
             # Start loop
             print("Press CTRL-C to stop sample")
@@ -171,9 +159,3 @@ class RunText:
 if __name__ == "__main__":
     run_text = RunText()
     run_text.process()
-
-
-
-
-
-
