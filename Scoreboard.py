@@ -143,7 +143,8 @@ class RunText:
 
         # Connect with MQTT Broker
         mqttc.connect(MQTT_HOST, MQTT_PORT, MQTT_KEEPALIVE_INTERVAL)
-
+        mqttc.loop()
+        print("trying to connect")
         # call the main part of the program
         try:
             # Start loop
