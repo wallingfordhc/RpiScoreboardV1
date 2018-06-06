@@ -15,7 +15,7 @@ MQTT_HOST = "192.168.1.92"
 MQTT_PORT = 1883
 MQTT_KEEPALIVE_INTERVAL = 45
 MQTT_TOPIC = "scoreboard/1"
-
+messagetxt = "It works!"
 # Define on connect event function
 # We shall subscribe to our Topic in this function
 def on_connect(self, mosq, obj, rc):
