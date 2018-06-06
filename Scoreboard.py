@@ -7,6 +7,7 @@ import paho.mqtt.client as mqtt
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 from rgbmatrix import graphics
 import time
+import datetime
 import argparse
 import sys
 
@@ -15,7 +16,10 @@ MQTT_HOST = "192.168.1.92"
 MQTT_PORT = 1883
 MQTT_KEEPALIVE_INTERVAL = 45
 MQTT_TOPIC = "scoreboard"
-messagetxt = "Hello"
+messagetxt = "Welcome to the Scoreboard"
+home = 0
+away = 0
+clock = datetime.datetime.now()
 
 
 # Define on connect event function
@@ -32,8 +36,10 @@ def on_connect(self, mosq, obj, rc):
 def on_message(mosq, obj, msg):
     print("received  ")
     print(msg.payload)
-    global messagetxt
-    messagetxt = msg.payload.decode("utf-8","ignore")
+    global messagetxt, home, away, clock
+    messagetxt = msg.payload.decode("utf-8", "ignore")
+    home, away, clock = messagetxt.split(',')
+
 
 
 def on_subscribe(mosq, obj, mid, granted_qos):
@@ -41,7 +47,9 @@ def on_subscribe(mosq, obj, mid, granted_qos):
           MQTT_TOPIC + " with QoS: " + str(granted_qos))
 
 
-class RunText:
+class MatrixDisplay:
+
+    #Initialise and get arguments
     def __init__(self, *args, **kwargs):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument("-t", "--text", help="The text to scroll on the RGB LED panel", default="Hello world!")
@@ -101,8 +109,8 @@ class RunText:
         while True:
             # clear the offscreen canvas
             offscreen_canvas.Clear()
-            if messagetxt:
-                my_text = messagetxt
+            if away:
+                my_text = away
 
             length = graphics.DrawText(offscreen_canvas, font, pos, 10, textcolour, my_text)
             pos -= 1
@@ -112,7 +120,7 @@ class RunText:
             time.sleep(0.05)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
 
-    def process(self):
+    def Setup(self):
         # set up the matrix configuration based on the run time arguments
         self.args = self.parser.parse_args()
 
@@ -157,10 +165,11 @@ if __name__ == "__main__":
     mqttc = mqtt.Client()
     # Assign event callbacks
     mqttc.on_message = on_message
+    messagetxt = mqttc.on_message
     mqttc.on_connect = on_connect
     mqttc.on_subscribe = on_subscribe
     # Connect with MQTT Broker
     mqttc.connect(MQTT_HOST, MQTT_PORT, MQTT_KEEPALIVE_INTERVAL)
     mqttc.loop_start()
-    run_text = RunText()
-    run_text.process()
+    run_text = MatrixDisplay()
+    run_text.Setup()
