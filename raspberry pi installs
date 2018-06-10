@@ -1,0 +1,5 @@
+pip
+git
+flask
+mosquitto - update mosquitto.conf to include websockets
+mosquitto client
