@@ -74,6 +74,7 @@ def settimer(timer_value):
     pass
 
 def starttimer(timer_value):
+    pass
 
 def pausetimer():
     pass
@@ -194,11 +195,7 @@ class MatrixDisplay:
                 length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
                                            timer_text)
 
-            if direction == "paused":
-                # add capability to pause and restart the timer
-
-
-
+        
             time.sleep(0.05)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
 
