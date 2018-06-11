@@ -3,8 +3,7 @@
 # Import package
 import paho.mqtt.client as mqtt
 import time
-# add for output
-# import RPi.GPIO as GPIO
+
 
 
 # Define Variables

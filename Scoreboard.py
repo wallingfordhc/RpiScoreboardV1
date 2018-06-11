@@ -12,14 +12,18 @@ import datetime
 import argparse
 import sys
 
-# Define Variables
+# Define key CONSTANT Variables
 MQTT_HOST = "192.168.1.92"
 MQTT_PORT = 1883
 MQTT_KEEPALIVE_INTERVAL = 45
 MQTT_TOPIC = "scoreboard"
-messagetxt = "Welcome to the Scoreboard"
-home = "0"
-away = "0"
+
+
+# define some global variables
+#TODO remove the global variables
+message_raw = "Welcome to the Scoreboard"
+messgae_content = ""
+message_value = ""
 
 # Define on connect event function
 # We shall subscribe to our Topic in this function
@@ -35,28 +39,59 @@ def on_connect(self, mosq, obj, rc):
 def on_message(mosq, obj, msg):
     print("received  ")
     print(msg.payload)
-    global messagetxt, home, away, direction, clockvalue, startvalue, starttime, clocktime
-    messagetxt = msg.payload.decode("utf-8", "ignore")
-    home, away, directionvalue, clockvalue, startvalue = messagetxt.split(',')
-    if clockvalue == "now":
-        clocktime = datetime.datetime.now()
-    else:
-        clocktime = datetime.datetime.strptime(clockvalue, "%M:%S")
+    global message_raw, message_content, message_value
+    message_raw = msg.payload.decode("utf-8", "ignore")
+    message_content, message_value = message_raw.split(';')
 
-    if directionvalue == "down":
-        if startvalue == "now":
-            starttime = datetime.datetime.now()
-        else:
-            starttime = datetime.datetime.strptime(startvalue, "%H:%M:%S")
+    action = {
+        "homescore": homescore,
+        "awayscore": awayscore,
+        "timerset": settimer,
+        "timerstart": starttimer,
+        "timerpause": pausetimer,
+        "showmessage": showmessage,
+        "hidemessage": hidemessage,
+        "showclock": hideclock,
+    }
 
-    direction = directionvalue
+    func = action.get(message_content, lambda: "invalid arg")
+    #execute the function
+    func()
 
-    print("home", home, "away", away, "direction", direction, "clocktime", clocktime, "starttime", starttime)
 
 def on_subscribe(mosq, obj, mid, granted_qos):
     print("Subscribed to Topic: " +
           MQTT_TOPIC + " with QoS: " + str(granted_qos))
 
+#define the actions to take given certain messages
+def homescore(score):
+    pass
+
+def awayscore(score):
+    pass
+
+def settimer(timer_value):
+    pass
+
+def starttimer(timer_value):
+
+def pausetimer():
+    pass
+
+def hidetimer():
+    pass
+
+def showmessage(message):
+    pass
+
+def hidemessage():
+    pass
+
+def showclock():
+    pass
+
+def hideclock():
+    pass
 
 class MatrixDisplay:
 
@@ -213,7 +248,7 @@ if __name__ == "__main__":
     mqttc = mqtt.Client()
     # Assign event callbacks
     mqttc.on_message = on_message
-    messagetxt = mqttc.on_message
+    message_raw = mqttc.on_message
     mqttc.on_connect = on_connect
     mqttc.on_subscribe = on_subscribe
     # Connect with MQTT Broker
