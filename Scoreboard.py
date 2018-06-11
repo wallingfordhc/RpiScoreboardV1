@@ -20,10 +20,14 @@ MQTT_TOPIC = "scoreboard"
 
 
 # define some global variables
-#TODO remove the global variables
+# TODO remove the global variables
 message_raw = "Welcome to the Scoreboard"
-messgae_content = ""
+message_content = ""
 message_value = ""
+home = ""
+away = ""
+
+
 
 # Define on connect event function
 # We shall subscribe to our Topic in this function
@@ -55,7 +59,7 @@ def on_message(mosq, obj, msg):
     }
 
     func = action.get(message_content, lambda: "invalid arg")
-    #execute the function
+    # execute the function
     func()
 
 
@@ -63,36 +67,47 @@ def on_subscribe(mosq, obj, mid, granted_qos):
     print("Subscribed to Topic: " +
           MQTT_TOPIC + " with QoS: " + str(granted_qos))
 
-#define the actions to take given certain messages
+
+# define the actions to take given certain messages
 def homescore(score):
     pass
+
 
 def awayscore(score):
     pass
 
+
 def settimer(timer_value):
     pass
+
 
 def starttimer(timer_value):
     pass
 
+
 def pausetimer():
     pass
+
 
 def hidetimer():
     pass
 
+
 def showmessage(message):
     pass
+
 
 def hidemessage():
     pass
 
+
 def showclock():
     pass
 
+
 def hideclock():
     pass
+
 
 class MatrixDisplay:
 
@@ -195,7 +210,7 @@ class MatrixDisplay:
                 length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
                                            timer_text)
 
-        
+
             time.sleep(0.05)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
 
