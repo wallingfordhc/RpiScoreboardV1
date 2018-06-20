@@ -24,8 +24,15 @@ MQTT_TOPIC = "scoreboard"
 message_raw = "Welcome to the Scoreboard"
 message_content = ""
 message_value = ""
-home = "1"
+home = "0"
 away = "0"
+timerset = ""
+clocktime = datetime.datetime.now()
+starttime = datetime.datetime.now()
+direction = "clock"
+
+
+
 
 
 
@@ -56,6 +63,9 @@ def on_message(mosq, obj, msg):
     if message_content == "awayscore":
         awayscore(message_value)
 
+    if message_content == "timerset":
+        settimer(message_value)
+
     action = {
         "homescore": homescore,
         "awayscore": awayscore,
@@ -84,7 +94,11 @@ def awayscore(score):
 
 
 def settimer(timer_value):
-    pass
+    global clocktime, starttime, direction
+    print("set timer")
+    clocktime = timer_value
+    starttime = datetime.datetime.now()
+    direction = "down"
 
 
 def starttimer(timer_value):
@@ -108,7 +122,10 @@ def hidemessage():
 
 
 def showclock():
-    pass
+    global direction
+    print("show clock")
+    direction = "clock"
+    
 
 
 def hideclock():
