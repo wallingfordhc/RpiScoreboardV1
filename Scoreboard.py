@@ -161,6 +161,7 @@ class MatrixDisplay:
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         scorefont = graphics.Font()
         scorefont.LoadFont("/home/pi/fonts/10x20.bdf")
+        scorefont.CharacterWidth(16)
         clockfont = graphics.Font()
         clockfont.LoadFont("/home/pi/fonts/8x13.bdf")
         hometextcolour = graphics.Color(255, 255, 255)
