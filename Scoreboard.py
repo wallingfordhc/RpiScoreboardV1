@@ -70,7 +70,10 @@ def on_subscribe(mosq, obj, mid, granted_qos):
 
 # define the actions to take given certain messages
 def homescore(score):
-    pass
+    global home
+    print("updated home score")
+    home = score
+
 
 
 def awayscore(score):
