@@ -79,6 +79,9 @@ def on_message(mosq, obj, msg):
     if message_content == "timerstart":
         starttimer(message_value)
 
+#TODO add unpause function add message function add image function
+#TODO scale and rotate text
+
 
 # define the actions to take given certain messages
 def homescore(score):
