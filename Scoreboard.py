@@ -105,7 +105,7 @@ def starttimer(timer_value):
 
 
 def pausetimer():
-    global  direction
+    global direction
     print("pause timer")
     direction = "pause"
 
