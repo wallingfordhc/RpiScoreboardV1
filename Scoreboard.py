@@ -232,7 +232,7 @@ class MatrixDisplay:
             if direction == "down":
                 t = clocktime - (datetime.datetime.now() - starttime)
                 # add if timer < 2 mins pause
-                timer_text = t.strftime('%M:%S')
+                timer_text = t.strftime('%H:%M:%S')
                 length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
                                            timer_text)
 
