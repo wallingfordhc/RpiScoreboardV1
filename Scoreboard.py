@@ -75,6 +75,10 @@ def on_message(mosq, obj, msg):
     if message_content == "timerpause":
         pausetimer()
 
+    if message_content == "timerstart":
+        starttimer(message_value)
+
+        
 # define the actions to take given certain messages
 def homescore(score):
     global home
