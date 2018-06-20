@@ -24,8 +24,8 @@ MQTT_TOPIC = "scoreboard"
 message_raw = "Welcome to the Scoreboard"
 message_content = ""
 message_value = ""
-home = "5"
-away = "2"
+home = "0"
+away = "0"
 
 
 
