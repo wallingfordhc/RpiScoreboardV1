@@ -68,19 +68,8 @@ def on_message(mosq, obj, msg):
     if message_content == "timerset":
         settimer(message_value)
 
-    action = {
-        "homescore": homescore,
-        "awayscore": awayscore,
-        "timerset": settimer,
-        "timerstart": starttimer,
-        "timerpause": pausetimer,
-        "showmessage": showmessage,
-        "hidemessage": hidemessage,
-        "showclock": hideclock,
-    }
-
-
-
+    if message_content == "showclock":
+        showclock()
 
 # define the actions to take given certain messages
 def homescore(score):
