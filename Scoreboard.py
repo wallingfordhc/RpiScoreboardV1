@@ -32,6 +32,7 @@ timerset = ""
 clocktime = datetime.datetime.now()
 starttime = datetime.datetime.now()
 direction = "clock"
+messagetext = ""
 
 
 
@@ -71,6 +72,9 @@ def on_message(mosq, obj, msg):
     if message_content == "showclock":
         showclock()
 
+    if message_content == "timerpause":
+        pausetimer()
+
 # define the actions to take given certain messages
 def homescore(score):
     global home
@@ -93,11 +97,17 @@ def settimer(timer_value):
 
 
 def starttimer(timer_value):
-    pass
+    global clocktime, starttime, direction
+    print("start timer")
+    clocktime = parser.parse(timer_value)
+    starttime = datetime.datetime.now()
+    direction = "down"
 
 
 def pausetimer():
-    pass
+    global  direction
+    print("pause timer")
+    direction = "pause"
 
 
 def hidetimer():
@@ -223,7 +233,20 @@ class MatrixDisplay:
                 t = clocktime - (datetime.datetime.now() - starttime)
                 # add if timer < 2 mins pause
                 if t.hour == 0:
-                    timer_text = t.strftime('%M:%S.%f')
+                    timer_text = t.strftime('%M:%S')
+                else:
+                    timer_text = t.strftime('%H:%M:%S')
+                length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
+                                           timer_text)
+
+            if direction == "message":
+                length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, messagetextcolour,
+                                           messagetext)
+
+            if direction == "pause":
+                t = clocktime
+                if t.hour == 0:
+                    timer_text = t.strftime('%M:%S')
                 else:
                     timer_text = t.strftime('%H:%M:%S')
                 length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
