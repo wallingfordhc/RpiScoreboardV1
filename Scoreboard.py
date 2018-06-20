@@ -60,7 +60,7 @@ def on_message(mosq, obj, msg):
 
     func = action.get(message_content, lambda: "invalid arg")
     # execute the function
-    func()
+    func(message_value)
 
 
 def on_subscribe(mosq, obj, mid, granted_qos):
