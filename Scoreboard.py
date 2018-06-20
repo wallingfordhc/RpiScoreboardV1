@@ -192,7 +192,8 @@ class MatrixDisplay:
         hometextcolour = graphics.Color(255, 255, 255)
         awaytextcolour = graphics.Color(255, 255, 255)
         clocktextcolour = graphics.Color(255, 0, 0)
-        timertextcolour = graphics.Color(255, 0, 0)
+        timertextcolour = graphics.Color(0, 255, 0)
+        messagetextcolour = graphics.Color(0,0,255)
         awayxpos = 47
         awayypos = 31
         homexpos = 12
@@ -232,7 +233,10 @@ class MatrixDisplay:
             if direction == "down":
                 t = clocktime - (datetime.datetime.now() - starttime)
                 # add if timer < 2 mins pause
-                timer_text = t.strftime('%H:%M:%S')
+                if t.hour == 0:
+                    timer_text = t.strftime('%M:%S')
+                else:
+                    timer_text = t.strftime('%H:%M:%S')
                 length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
                                            timer_text)
 
