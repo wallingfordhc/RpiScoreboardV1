@@ -77,7 +77,9 @@ def homescore(score):
 
 
 def awayscore(score):
-    pass
+    global away
+    print("updated away score")
+    away = score
 
 
 def settimer(timer_value):
