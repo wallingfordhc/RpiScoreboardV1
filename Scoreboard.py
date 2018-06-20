@@ -11,6 +11,8 @@ import time
 import datetime
 import argparse
 import sys
+from dateutil import parser
+
 
 # Define key CONSTANT Variables
 MQTT_HOST = "192.168.1.92"
@@ -96,7 +98,7 @@ def awayscore(score):
 def settimer(timer_value):
     global clocktime, starttime, direction
     print("set timer")
-    clocktime = timer_value
+    clocktime = parser.parse(timer_value)
     starttime = datetime.datetime.now()
     direction = "down"
 
@@ -125,7 +127,7 @@ def showclock():
     global direction
     print("show clock")
     direction = "clock"
-    
+
 
 
 def hideclock():
