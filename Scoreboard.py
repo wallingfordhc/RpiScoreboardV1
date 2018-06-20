@@ -98,7 +98,7 @@ def awayscore(score):
 def settimer(timer_value):
     global clocktime, starttime, direction
     print("set timer")
-    clocktime = parser.parse("08:00 AM")
+    clocktime = parser.parse(timer_value)
     starttime = datetime.datetime.now()
     direction = "down"
 
