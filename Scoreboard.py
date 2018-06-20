@@ -36,6 +36,9 @@ def on_connect(self, mosq, obj, rc):
     mqttc.subscribe(MQTT_TOPIC, 0)
     print("Connect on " + MQTT_HOST)
 
+def on_subscribe(mosq, obj, mid, granted_qos):
+    print("Subscribed to Topic: " +
+          MQTT_TOPIC + " with QoS: " + str(granted_qos))
 
 # Define on_message event function.
 # This function will be invoked every time,
@@ -46,6 +49,12 @@ def on_message(mosq, obj, msg):
     global message_raw, message_content, message_value
     message_raw = msg.payload.decode("utf-8", "ignore")
     message_content, message_value = message_raw.split(';')
+
+    if message_content == "homescore":
+        homescore(message_value)
+
+    if message_content == "awayscore":
+        awayscore(message_value)
 
     action = {
         "homescore": homescore,
@@ -58,14 +67,7 @@ def on_message(mosq, obj, msg):
         "showclock": hideclock,
     }
 
-    func = action.get(message_content, lambda: "invalid arg")
-    # execute the function
-    func(message_value)
 
-
-def on_subscribe(mosq, obj, mid, granted_qos):
-    print("Subscribed to Topic: " +
-          MQTT_TOPIC + " with QoS: " + str(granted_qos))
 
 
 # define the actions to take given certain messages
@@ -73,7 +75,6 @@ def homescore(score):
     global home
     print("updated home score")
     home = score
-
 
 
 def awayscore(score):
