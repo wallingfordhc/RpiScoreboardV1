@@ -31,6 +31,7 @@ away = "0"
 timerset = ""
 clocktime = datetime.datetime.now()
 starttime = datetime.datetime.now()
+currenttime = datetime.datetime.now()
 direction = "clock"
 messagetext = ""
 
@@ -78,7 +79,7 @@ def on_message(mosq, obj, msg):
     if message_content == "timerstart":
         starttimer(message_value)
 
-        
+
 # define the actions to take given certain messages
 def homescore(score):
     global home
@@ -212,6 +213,7 @@ class MatrixDisplay:
         global direction
         global clocktime
         global starttime
+        global currenttime
         direction = "clock"
         clocktime = 0
 
@@ -235,6 +237,7 @@ class MatrixDisplay:
                                            clock_text)
             if direction == "down":
                 t = clocktime - (datetime.datetime.now() - starttime)
+                currenttime = t
                 # add if timer < 2 mins pause
                 if t.hour == 0:
                     timer_text = t.strftime('%M:%S')
@@ -248,7 +251,7 @@ class MatrixDisplay:
                                            messagetext)
 
             if direction == "pause":
-                t = clocktime
+                t = currenttime
                 if t.hour == 0:
                     timer_text = t.strftime('%M:%S')
                 else:
