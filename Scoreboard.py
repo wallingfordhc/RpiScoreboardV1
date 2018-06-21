@@ -73,11 +73,9 @@ def on_message(mosq, obj, msg):
     if message_content == "showclock":
         showclock()
 
-    if message_content == "timerpause":
-        pausetimer()
-
     if message_content == "timerstart":
         starttimer(message_value)
+
 
 #TODO add unpause function add message function add image function
 #TODO scale and rotate text
@@ -113,6 +111,11 @@ def starttimer(timer_value):
 
 
 def pausetimer():
+    global direction
+    print("pause timer")
+    direction = "pause"
+
+def unpausetimer():
     global direction
     print("pause timer")
     direction = "pause"
@@ -280,12 +283,6 @@ class MatrixDisplay:
                     timer_text = t.strftime('%H:%M:%S')
                 length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
                                            timer_text)
-
-            if direction == "unpause":
-                # set the timer to resume from the current paused display
-                clocktime = currenttime
-                starttime = datetime.datetime.now()
-                direction = "down"
 
             time.sleep(0.05)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
