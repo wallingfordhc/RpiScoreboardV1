@@ -108,7 +108,7 @@ def settimer(timer_value):
 def starttimer(timer_value):
     global clocktime, starttime, direction
     print("start timer")
-    clocktime = parser.parse(timer_value)
+    clocktime = currenttime
     starttime = datetime.datetime.now()
     direction = "down"
 
