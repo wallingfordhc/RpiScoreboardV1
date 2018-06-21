@@ -257,6 +257,7 @@ class MatrixDisplay:
                 length = graphics.DrawText(offscreen_canvas, clockfont, clockxpos, clockypos, clocktextcolour,
                                            clock_text)
             if direction == "down":
+                #TODO get the timer to stop at zero
                 t = clocktime - (datetime.datetime.now() - starttime)
                 currenttime = t
                 # add if timer < 2 mins pause
@@ -280,6 +281,11 @@ class MatrixDisplay:
                 length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
                                            timer_text)
 
+            if direction == "unpause":
+                # set the timer to resume from the current paused display
+                clocktime = currenttime
+                starttime = datetime.datetime.now()
+                direction = "down"
 
             time.sleep(0.05)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
