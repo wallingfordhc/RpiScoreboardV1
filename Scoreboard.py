@@ -219,18 +219,18 @@ class MatrixDisplay:
         global currenttime
         direction = "clock"
         clocktime = 0
-        digits = {0: "number0r.png",
-                  1: "number1r.png",
-                  2: "number2r.png",
-                  3: "number3r.png",
-                  4: "number4r.png",
-                  5: "number5r.png",
-                  6: "number6r.png",
-                  7: "number7r.png",
-                  8: "number8r.png",
-                  9: "number9r.png",
-                  10: "number10r.png",
-                  11: "number11r.png"
+        digits = {'0': "number0r.png",
+                  '1': "number1r.png",
+                  '2': "number2r.png",
+                  '3': "number3r.png",
+                  '4': "number4r.png",
+                  '5': "number5r.png",
+                  '6': "number6r.png",
+                  '7': "number7r.png",
+                  '8': "number8r.png",
+                  '9': "number9r.png",
+                  '10': "number10r.png",
+                  '11': "number11r.png"
                   }
 
 
