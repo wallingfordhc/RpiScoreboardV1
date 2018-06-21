@@ -228,7 +228,7 @@ class MatrixDisplay:
             if away:
                 away_score = away
                 #length = graphics.DrawText(offscreen_canvas, scorefont, awayxpos, awayypos, hometextcolour, away_score)
-                image = Image.open("number6.png")
+                image = Image.open("number6r.bmp")
                 offscreen_canvas.SetImage(image, 32,15)
 
             if home:
