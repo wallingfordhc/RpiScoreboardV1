@@ -70,6 +70,9 @@ def on_message(mosq, obj, msg):
     if message_content == "timerset":
         settimer(message_value)
 
+    if message_content == "timerpause":
+        pausetimer()
+
     if message_content == "showclock":
         showclock()
 
@@ -115,11 +118,6 @@ def pausetimer():
     print("pause timer")
     direction = "pause"
 
-def unpausetimer():
-    global direction
-    print("pause timer")
-    direction = "pause"
-
 
 def hidetimer():
     pass
@@ -137,7 +135,6 @@ def showclock():
     global direction
     print("show clock")
     direction = "clock"
-
 
 
 def hideclock():
