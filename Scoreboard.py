@@ -242,12 +242,14 @@ class MatrixDisplay:
             if away:
                 away_score = away
                 #length = graphics.DrawText(offscreen_canvas, scorefont, awayxpos, awayypos, hometextcolour, away_score)
-                image = Image.open(digits[away])
-                offscreen_canvas.SetImage(image, 33,17)
+                awayimage = Image.open(digits[away])
+                offscreen_canvas.SetImage(awayimage, 32,16)
 
             if home:
                 home_score = home
-                length = graphics.DrawText(offscreen_canvas, scorefont, homexpos, homeypos, awaytextcolour, home_score)
+                #length = graphics.DrawText(offscreen_canvas, scorefont, homexpos, homeypos, awaytextcolour, home_score)
+                homeimage = Image.open(digits[home])
+                offscreen_canvas.SetImage(homeimage, 0, 16)
 
             if direction == "clock":
                 t = datetime.datetime.now()
