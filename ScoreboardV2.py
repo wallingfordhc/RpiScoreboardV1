@@ -187,6 +187,6 @@ while True:
     time.sleep(0.05)
 
     # refresh the display
-    sb_display.offscreen_canvas = sb_display.offscreen_canvas.SwapOnVSync(sb_display.offscreen_canvas)
+    sb_display.offscreen_canvas = sb_display.SwapOnVSync(sb_display.offscreen_canvas)
 
     # repeat
