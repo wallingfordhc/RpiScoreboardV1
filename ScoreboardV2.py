@@ -56,6 +56,7 @@ class ScoreboardDisplay:
         options.rows = 16
         options.cols = 32
         options.chain_length = 4
+        options.pixel_mapper_config = "U-mapper"
         options.multiplexing = 8  # CORRECT value for 1/4 SCAN PANELS
 
         self.matrix = RGBMatrix(options=options)
