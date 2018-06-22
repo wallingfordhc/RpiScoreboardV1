@@ -19,7 +19,7 @@ import config
 class MyMQTTClient(mqtt.Client):
 
     def run(self, host, port, keepalive_interval, topic):
-        self.connect(host, port, keepalive_interval)
+        self.connect(host, 1883, 45)
         self.subscribe(topic, 0)
         self.loop_start()
 
