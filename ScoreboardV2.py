@@ -159,11 +159,11 @@ if __name__ == "__main__":
     sb_display = ScoreboardDisplay()
 
     # initialise screen widgets
-    homescorewidget = DisplayWidget(sb_display, 7, 5, 5, 5, "0")
-    awayscorewidget = DisplayWidget(sb_display, 5, 10, 5, 5, "2")
+    homescorewidget = DisplayWidget(sb_display, 3, 3, 5, 5, "0")
+    awayscorewidget = DisplayWidget(sb_display, 10, 10, 5, 5, "2")
     clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
     timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
-    messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16, "Hello World")
+    messagewidget = DisplayWidget(sb_display, 4, 4, 64, 16, "Hello World")
     heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1, "0")
 
 # loop
