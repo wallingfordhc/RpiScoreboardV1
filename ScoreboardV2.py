@@ -176,7 +176,9 @@ while True:
 
     # set active widgets
     homescorewidget.displayscore()
+    print("next")
     awayscorewidget.displayscore()
+    print("now the clock")
     clockwidget.displayclock()
     timerwidget.displaytimer()
     heartbeatwidget.displayheartbeat()
