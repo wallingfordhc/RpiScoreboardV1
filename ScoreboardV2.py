@@ -163,6 +163,7 @@ if __name__ == "__main__":
     # loop
 
     sb_display.offscreen_canvas.Clear()
+    
     # clear the display
 
     # set active widgets
@@ -176,6 +177,6 @@ if __name__ == "__main__":
     time.sleep(0.05)
 
     # refresh the display
-    sb_display.offscreen_canvas.SwapOnVSync(sb_display.offscreen_canvas)
+    sb_display.offscreen_canvas= sb_display.offscreen_canvas.SwapOnVSync(sb_display.offscreen_canvas)
 
     # repeat
