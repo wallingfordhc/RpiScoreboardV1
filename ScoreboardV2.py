@@ -61,6 +61,7 @@ class ScoreboardDisplay:
         self.offscreen_canvas = self.matrix.CreateFrameCanvas()
 
 
+
 class DisplayWidget:
 
     def __init__(self, parentdisplay, x, y, xwidth, ywidth, content="0", is_visible=True):
@@ -161,9 +162,9 @@ if __name__ == "__main__":
     heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1)
 
     # loop
-
+while True:
     sb_display.offscreen_canvas.Clear()
-    
+
     # clear the display
 
     # set active widgets
@@ -177,6 +178,6 @@ if __name__ == "__main__":
     time.sleep(0.05)
 
     # refresh the display
-    sb_display.offscreen_canvas= sb_display.offscreen_canvas.SwapOnVSync(sb_display.offscreen_canvas)
+    sb_display.offscreen_canvas = sb_display.offscreen_canvas.SwapOnVSync(sb_display.offscreen_canvas)
 
     # repeat
