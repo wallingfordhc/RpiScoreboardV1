@@ -160,11 +160,11 @@ if __name__ == "__main__":
 
     # initialise screen widgets
     homescorewidget = DisplayWidget(sb_display, 0, 0, 5, 5, "0")
-    awayscorewidget = DisplayWidget(sb_display, 0, 15, 5, 5, "2")
-    clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
-    timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
-    messagewidget = DisplayWidget(sb_display, 4, 4, 64, 16, "Hello World")
-    heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1, "0")
+    #awayscorewidget = DisplayWidget(sb_display, 0, 15, 5, 5, "2")
+    #clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
+    #timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
+    #messagewidget = DisplayWidget(sb_display, 4, 4, 64, 16, "Hello World")
+    #heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1, "0")
 
 # loop
 
@@ -178,13 +178,13 @@ while True:
     # set active widgets
     homescorewidget.displayscore()
     print("next")
-    awayscorewidget.displayscore()
+    #awayscorewidget.displayscore()
     print("now the clock")
-    clockwidget.displayclock()
+    #clockwidget.displayclock()
     print("now the timer")
-    timerwidget.displaytimer()
+    #timerwidget.displaytimer()
     print("now the heartbeat")
-    heartbeatwidget.displayheartbeat()
+   # heartbeatwidget.displayheartbeat()
 
     # wait a short time
     time.sleep(0.05)
