@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
     # initialise MQTT client
     print("welcome to the scoreboard")
-    
+
     mqttclient = MyMQTTClient()
     mqttclient.run(config.mqtt['host'],
                    config.mqtt['port'],
