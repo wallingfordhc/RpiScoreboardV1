@@ -88,6 +88,8 @@ class DisplayWidget:
                 self.parentdisplay.offscreen_canvas.SetPixel(i, j, colour, colour, colour)
 
     def displayscore(self):
+        print("entering displayscore")
+        
         digits = {'0': "number0r.png",
                   '1': "number1r.png",
                   '2': "number2r.png",
@@ -154,11 +156,11 @@ if __name__ == "__main__":
 
     # initialise screen widgets
     homescorewidget = DisplayWidget(sb_display, 16, 16, 16, 32, "0")
-    awayscorewidget = DisplayWidget(sb_display, 0, 16, 16, 32)
-    clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16)
+    awayscorewidget = DisplayWidget(sb_display, 0, 16, 16, 32, "0")
+    clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
     timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
-    messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16)
-    heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1)
+    messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16, "Hello World")
+    heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1, "0")
 
 # loop
 
