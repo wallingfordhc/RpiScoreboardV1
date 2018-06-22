@@ -35,7 +35,8 @@ class MyMQTTClient(mqtt.Client):
         self.message_handler(msg)
 
     def message_handler(self, msg):
-        message_verb, message_value = msg.split(';')
+        message_raw = msg.payload.decode("utf-8", "ignore")
+        message_verb, message_value = message_raw.split(';')
         if message_verb == "homescore":
             self.homescore(message_value)
 
