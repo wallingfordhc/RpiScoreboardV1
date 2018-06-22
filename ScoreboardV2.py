@@ -136,6 +136,7 @@ class DisplayWidget:
 
         self.fillwidget(c)
 
+
 # main function
 if __name__ == "__main__":
     # initialise MQTT broker
@@ -164,7 +165,6 @@ if __name__ == "__main__":
 
 while True:
     sb_display.offscreen_canvas.Clear()
-    sb_display.offscreen_canvas.SwapOnVSync()
     print("clear screen")
 
     # clear the display
