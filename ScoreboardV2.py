@@ -71,17 +71,17 @@ class DisplayWidget:
         self.content = content
         self.parentdisplay = parentdisplay
 
-    def showtext(self, text, x, y, font, displaycolour):
+    def showtext(self, text, xx, yy, font, displaycolour):
         displayfont = graphics.Font()
         displayfont.LoadFont("/home/pi/fonts/" + font)
         length = graphics.DrawText(self.parentdisplay.offscreen_canvas,
                                    displayfont,
-                                   self.x + x, self.y + y,
+                                   self.x + xx, self.y + yy,
                                    displaycolour, text)
 
-    def showimage(self, image, x, y):
+    def showimage(self, image, xx, yy):
         print("entering showimage")
-        self.parentdisplay.offscreen_canvas.SetImage(image, self.x + x, self.y + y)
+        self.parentdisplay.offscreen_canvas.SetImage(image, self.x + xx, self.y + yy)
 
     def fillwidget(self, colour):
         for i in range(self.x, self.x + self.xwidth - 1):
@@ -158,8 +158,8 @@ if __name__ == "__main__":
     sb_display = ScoreboardDisplay()
 
     # initialise screen widgets
-    homescorewidget = DisplayWidget(sb_display, 5, 5, 5, 5, "0")
-    awayscorewidget = DisplayWidget(sb_display, 5, 10, 5, 5, "0")
+    homescorewidget = DisplayWidget(sb_display, 7, 5, 5, 5, "0")
+    awayscorewidget = DisplayWidget(sb_display, 5, 10, 5, 5, "2")
     clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
     timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
     messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16, "Hello World")
