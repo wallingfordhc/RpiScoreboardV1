@@ -63,13 +63,13 @@ class ScoreboardDisplay:
 
 class DisplayWidget:
 
-    def __init__(self, parentdisplay, x, y, xwidth, ywidth, is_visible=True):
+    def __init__(self, parentdisplay, x, y, xwidth, ywidth, content="0", is_visible=True):
         self.x = x
         self.y = y
         self.xwidth = xwidth
         self.ywidth = ywidth
         self.is_visible = is_visible
-        self.content = 0
+        self.content = content
         self.parentdisplay = parentdisplay
 
     def showtext(self, text, x, y, font, colour=0):
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     sb_display = ScoreboardDisplay()
 
     # initialise screen widgets
-    homescorewidget = DisplayWidget(sb_display, 16, 16, 16, 32)
+    homescorewidget = DisplayWidget(sb_display, 16, 16, 16, 32, "0")
     awayscorewidget = DisplayWidget(sb_display, 0, 16, 16, 32)
     clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16)
     timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16)
