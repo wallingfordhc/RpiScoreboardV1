@@ -6,7 +6,7 @@
 # author d.shannon
 # 
 import paho.mqtt.client as mqtt
-from rgbmatrix import RGBMatrix, RGBMAtrixOptions
+from rgbmatrix import RGBMatrix, RGBMatrixOptions
 from rgbmatrix import graphics
 from PIL import Image
 import time
