@@ -31,7 +31,7 @@ class MyMQTTClient(mqtt.Client):
         print("Subscribed to topic: " + str(mid) + " with QoS: " + str(granted_qos))
 
     def on_message(self, mosq, obj, msg):
-        print("Received: " + msg.payload)
+        print("Received: ")
         self.message_handler(msg)
 
     def message_handler(self, msg):
