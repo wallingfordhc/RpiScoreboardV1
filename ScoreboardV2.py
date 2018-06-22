@@ -24,10 +24,10 @@ class MyMQTTClient(mqtt.Client):
         self.subscribe(topic, 0)
         self.loop_start()
 
-    def on_connect(self, mosq, obj, rc):
+    def on_connect(self, mosq, obj, flags, rc):
         print("Connected to broker")
 
-    def on_subscribe(mosq, obj, mid, granted_qos):
+    def on_subscribe(self, mosq, obj, mid, granted_qos):
         print("Subscribed to topic: " + str(mid) + " with QoS: " + str(granted_qos))
 
     def on_message(self, mosq, obj, msg):
@@ -59,7 +59,6 @@ class ScoreboardDisplay:
 
         self.matrix = RGBMatrix(options=options)
         self.offscreen_canvas = self.matrix.CreateFrameCanvas()
-        self.offscreen_canvas
 
 class DisplayWidget:
 
