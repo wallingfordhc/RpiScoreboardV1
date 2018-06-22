@@ -48,7 +48,7 @@ class MyMQTTClient(mqtt.Client):
 class ScoreboardDisplay:
 
     def __init__(self):
-        options = RGBMAtrixOptions()
+        options = RGBMatrixOptions()
         # TODO MOVE TO CONFIG FILE
         options.hardware_mapping = "adafruit-hat"
         options.disable_hardware_pulsing = True
