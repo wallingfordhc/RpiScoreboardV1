@@ -178,13 +178,13 @@ while True:
     # set active widgets
     homescorewidget.displayscore()
     print("next")
-    #awayscorewidget.displayscore()
+    awayscorewidget.displayscore()
     print("now the clock")
     #clockwidget.displayclock()
     print("now the timer")
     #timerwidget.displaytimer()
     print("now the heartbeat")
-   # heartbeatwidget.displayheartbeat()
+    heartbeatwidget.displayheartbeat()
 
     # wait a short time
     time.sleep(2)
