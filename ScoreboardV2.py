@@ -109,7 +109,7 @@ class DisplayWidget:
     def displayclock(self):
         t = datetime.now()
         clocktext = t.strftime('%H:%M:%S')
-        displaycolour = graphics.color(255, 0, 0)
+        displaycolour = graphics.Color(255, 0, 0)
         self.showtext(clocktext, 0, 0, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
@@ -119,11 +119,11 @@ class DisplayWidget:
         else:
             timertext = t.strftime('%H:%M:%S')
 
-        displaycolour = graphics.color(255, 0, 0)
+        displaycolour = graphics.Color(255, 0, 0)
         self.showtext(timertext, 0, 0, "8x13.bdf", displaycolour)
 
     def displaymessage(self):
-        displaycolour = graphics.color(255, 255, 255)
+        displaycolour = graphics.Color(255, 255, 255)
         self.showtext(self.content, 0, 0, "8x13.bdf", displaycolour)
 
     def displayheartbeat(self):
