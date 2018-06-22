@@ -73,9 +73,9 @@ class DisplayWidget:
         self.parentdisplay = parentdisplay
 
     def showtext(self, text, x, y, font, colour=0):
-        scorefont = graphics.Font()
-        scorefont.LoadFont("/home/pi/fonts/" + font)
-        length = graphics.DrawText(self.parentdisplay.offscreen_canvas, font, self.x + x, self.y + y, colour, text)
+        displayfont = graphics.Font()
+        displayfont.LoadFont("/home/pi/fonts/" + font)
+        length = graphics.DrawText(self.parentdisplay.offscreen_canvas, displayfont, self.x + x, self.y + y, colour, text)
 
     def showimage(self, image, x, y):
         self.parentdisplay.offscreen_canvas.SetImage(image, self.x + x, self.y + y)
