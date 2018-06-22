@@ -72,10 +72,13 @@ class DisplayWidget:
         self.content = content
         self.parentdisplay = parentdisplay
 
-    def showtext(self, text, x, y, font, colour=0):
+    def showtext(self, text, x, y, font, displaycolour):
         displayfont = graphics.Font()
         displayfont.LoadFont("/home/pi/fonts/" + font)
-        length = graphics.DrawText(self.parentdisplay.offscreen_canvas, displayfont, self.x + x, self.y + y, colour, text)
+        length = graphics.DrawText(self.parentdisplay.offscreen_canvas,
+                                   displayfont,
+                                   self.x + x, self.y + y,
+                                   displaycolour, text)
 
     def showimage(self, image, x, y):
         self.parentdisplay.offscreen_canvas.SetImage(image, self.x + x, self.y + y)
@@ -106,7 +109,8 @@ class DisplayWidget:
     def displayclock(self):
         t = datetime.now()
         clocktext = t.strftime('%H:%M:%S')
-        self.showtext(clocktext, 0, 0, "8x13.bdf")
+        displaycolour = graphics.color(255, 0, 0)
+        self.showtext(clocktext, 0, 0, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
         t = parser.parse(self.content)
@@ -114,10 +118,13 @@ class DisplayWidget:
             timertext = t.strftime('%M:%S')
         else:
             timertext = t.strftime('%H:%M:%S')
-        self.showtext(timertext, 0, 0, "8x13.bdf")
+
+        displaycolour = graphics.color(255, 0, 0)
+        self.showtext(timertext, 0, 0, "8x13.bdf", displaycolour)
 
     def displaymessage(self):
-        self.showtext(self.content, 0, 0, "8x13.bdf")
+        displaycolour = graphics.color(255, 255, 255)
+        self.showtext(self.content, 0, 0, "8x13.bdf", displaycolour)
 
     def displayheartbeat(self):
         # FLASH ALL PIXELS ONTHE WIDGET
