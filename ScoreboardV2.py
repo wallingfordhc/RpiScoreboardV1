@@ -18,11 +18,11 @@ import config
 
 class MyMQTTClient(mqtt.Client):
 
-    def __init__(self, host, port, keepalive_interval, topic):
-        super()
+    def run(self, host, port, keepalive_interval, topic):
         self.connect(host, port, keepalive_interval)
         self.subscribe(topic, 0)
         self.loop_start()
+
 
     def on_connect(self, mosq, obj, rc):
         print("Connected to broker")
@@ -136,10 +136,11 @@ if __name__ == "__main__":
     # initialise MQTT broker
 
     # initialise MQTT client
-    mqttclient = MyMQTTClient(config.mqtt['host'],
-                              config.mqtt['port'],
-                              config.mqtt['keepalive_interval'],
-                              config.mqtt['topic'])
+    mqttclient = MyMQTTClient()
+    mqttclient.run(config.mqtt['host'],
+                   config.mqtt['port'],
+                   config.mqtt['keepalive_interval'],
+                   config.mqtt['topic'])
 
     # initialise Matrix display
     sb_display = ScoreboardDisplay()
