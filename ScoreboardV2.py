@@ -156,7 +156,7 @@ if __name__ == "__main__":
     homescorewidget = DisplayWidget(sb_display, 16, 16, 16, 32, "0")
     awayscorewidget = DisplayWidget(sb_display, 0, 16, 16, 32)
     clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16)
-    timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16)
+    timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
     messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16)
     heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1)
 
