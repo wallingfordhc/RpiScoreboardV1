@@ -159,7 +159,7 @@ if __name__ == "__main__":
     sb_display = ScoreboardDisplay()
 
     # initialise screen widgets
-    homescorewidget = DisplayWidget(sb_display,-10, 0, 5, 5, "0")
+    homescorewidget = DisplayWidget(sb_display,10, 0, 5, 5, "0")
     #awayscorewidget = DisplayWidget(sb_display, 0, 15, 5, 5, "2")
     #clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
     #timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
