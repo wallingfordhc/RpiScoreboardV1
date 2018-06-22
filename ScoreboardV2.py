@@ -155,7 +155,7 @@ if __name__ == "__main__":
 
     # loop
 
-    sb_display.offscreen_canvas.clear()
+    sb_display.offscreen_canvas.Clear()
     # clear the display
 
     # set active widgets
