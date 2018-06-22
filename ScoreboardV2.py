@@ -58,7 +58,7 @@ class ScoreboardDisplay:
 
         self.matrix = RGBMatrix(options=options)
         self.offscreen_canvas = self.matrix.CreateFrameCanvas()
-
+        self.offscreen_canvas
 
 class DisplayWidget:
 
@@ -136,33 +136,36 @@ class DisplayWidget:
 
         self.fillwidget(c)
 
-    # main function
-
+# main function
+if __name__ == "__main__":
     # initialise MQTT broker
 
     # initialise MQTT client
-mqttclient = MyMQTTClient()
-mqttclient.run(config.mqtt['host'],
-               config.mqtt['port'],
-               config.mqtt['keepalive_interval'],
-               config.mqtt['topic'])
-# initialise Matrix display
-sb_display = ScoreboardDisplay()
+    print("welcome to the scoreboard")
+    
+    mqttclient = MyMQTTClient()
+    mqttclient.run(config.mqtt['host'],
+                   config.mqtt['port'],
+                   config.mqtt['keepalive_interval'],
+                   config.mqtt['topic'])
+    # initialise Matrix display
+    sb_display = ScoreboardDisplay()
 
-# initialise screen widgets
-homescorewidget = DisplayWidget(sb_display, 16, 16, 16, 32, "0")
-awayscorewidget = DisplayWidget(sb_display, 0, 16, 16, 32)
-clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16)
-timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
-messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16)
-heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1)
+    # initialise screen widgets
+    homescorewidget = DisplayWidget(sb_display, 16, 16, 16, 32, "0")
+    awayscorewidget = DisplayWidget(sb_display, 0, 16, 16, 32)
+    clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16)
+    timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
+    messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16)
+    heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1)
 
 # loop
 
 
 while True:
     sb_display.offscreen_canvas.Clear()
-    print("ckear screen")
+    sb_display.offscreen_canvas.SwapOnVSync()
+    print("clear screen")
 
     # clear the display
 
