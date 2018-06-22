@@ -1,0 +1,9 @@
+New code for the Wallingford Hockeyclub scoreboard
+
+
+Multiple RGB matrix LED panels
+
+connected via an Adafruit HAT to a Raspberry pi zeroW
+
+idea is that the pi Zero will act a wireless hot spot and receive MQTT messages to update the board
+

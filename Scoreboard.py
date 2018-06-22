@@ -11,15 +11,34 @@ import time
 import datetime
 import argparse
 import sys
+from dateutil import parser
 
-# Define Variables
+
+# Define key CONSTANT Variables
 MQTT_HOST = "192.168.1.92"
 MQTT_PORT = 1883
 MQTT_KEEPALIVE_INTERVAL = 45
 MQTT_TOPIC = "scoreboard"
-messagetxt = "Welcome to the Scoreboard"
+
+
+# define some global variables
+# TODO remove the global variables
+message_raw = "Welcome to the Scoreboard"
+message_content = ""
+message_value = ""
 home = "0"
 away = "0"
+timerset = ""
+clocktime = datetime.datetime.now()
+starttime = datetime.datetime.now()
+currenttime = datetime.datetime.now()
+direction = "clock"
+messagetext = ""
+
+
+
+
+
 
 # Define on connect event function
 # We shall subscribe to our Topic in this function
@@ -28,6 +47,9 @@ def on_connect(self, mosq, obj, rc):
     mqttc.subscribe(MQTT_TOPIC, 0)
     print("Connect on " + MQTT_HOST)
 
+def on_subscribe(mosq, obj, mid, granted_qos):
+    print("Subscribed to Topic: " +
+          MQTT_TOPIC + " with QoS: " + str(granted_qos))
 
 # Define on_message event function.
 # This function will be invoked every time,
@@ -35,27 +57,88 @@ def on_connect(self, mosq, obj, rc):
 def on_message(mosq, obj, msg):
     print("received  ")
     print(msg.payload)
-    global messagetxt, home, away, direction, clockvalue, startvalue, starttime, clocktime
-    messagetxt = msg.payload.decode("utf-8", "ignore")
-    home, away, directionvalue, clockvalue, startvalue = messagetxt.split(',')
-    if clockvalue == "now":
-        clocktime = datetime.datetime.now()
-    else:
-        clocktime = datetime.datetime.strptime(clockvalue, "%M:%S")
+    global message_raw, message_content, message_value
+    message_raw = msg.payload.decode("utf-8", "ignore")
+    message_content, message_value = message_raw.split(';')
 
-    if directionvalue == "down":
-        if startvalue == "now":
-            starttime = datetime.datetime.now()
-        else:
-            starttime = datetime.datetime.strptime(startvalue, "%H:%M:%S")
+    if message_content == "homescore":
+        homescore(message_value)
 
-    direction = directionvalue
+    if message_content == "awayscore":
+        awayscore(message_value)
 
-    print("home", home, "away", away, "direction", direction, "clocktime", clocktime, "starttime", starttime)
+    if message_content == "timerset":
+        settimer(message_value)
 
-def on_subscribe(mosq, obj, mid, granted_qos):
-    print("Subscribed to Topic: " +
-          MQTT_TOPIC + " with QoS: " + str(granted_qos))
+    if message_content == "timerpause":
+        pausetimer()
+
+    if message_content == "showclock":
+        showclock()
+
+    if message_content == "timerstart":
+        starttimer(message_value)
+
+
+#TODO add unpause function add message function add image function
+#TODO scale and rotate text
+
+
+# define the actions to take given certain messages
+def homescore(score):
+    global home
+    print("updated home score")
+    home = score
+
+
+def awayscore(score):
+    global away
+    print("updated away score")
+    away = score
+
+
+def settimer(timer_value):
+    global clocktime, starttime, direction
+    print("set timer")
+    clocktime = parser.parse(timer_value)
+    starttime = datetime.datetime.now()
+    direction = "down"
+
+
+def starttimer(timer_value):
+    global clocktime, starttime, direction
+    print("start timer")
+    clocktime = currenttime
+    starttime = datetime.datetime.now()
+    direction = "down"
+
+
+def pausetimer():
+    global direction
+    print("pause timer")
+    direction = "pause"
+
+
+def hidetimer():
+    pass
+
+
+def showmessage(message):
+    pass
+
+
+def hidemessage():
+    pass
+
+
+def showclock():
+    global direction
+    print("show clock")
+    direction = "clock"
+
+
+def hideclock():
+    pass
 
 
 class MatrixDisplay:
@@ -110,12 +193,14 @@ class MatrixDisplay:
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         scorefont = graphics.Font()
         scorefont.LoadFont("/home/pi/fonts/10x20.bdf")
+        scorefont.CharacterWidth(16)
         clockfont = graphics.Font()
         clockfont.LoadFont("/home/pi/fonts/8x13.bdf")
         hometextcolour = graphics.Color(255, 255, 255)
         awaytextcolour = graphics.Color(255, 255, 255)
         clocktextcolour = graphics.Color(255, 0, 0)
-        timertextcolour = graphics.Color(255, 0, 0)
+        timertextcolour = graphics.Color(0, 255, 0)
+        messagetextcolour = graphics.Color(0,0,255)
         awayxpos = 47
         awayypos = 31
         homexpos = 12
@@ -131,8 +216,23 @@ class MatrixDisplay:
         global direction
         global clocktime
         global starttime
+        global currenttime
         direction = "clock"
         clocktime = 0
+        digits = {'0': "number0r.png",
+                  '1': "number1r.png",
+                  '2': "number2r.png",
+                  '3': "number3r.png",
+                  '4': "number4r.png",
+                  '5': "number5r.png",
+                  '6': "number6r.png",
+                  '7': "number7r.png",
+                  '8': "number8r.png",
+                  '9': "number9r.png",
+                  '10': "number10r.png",
+                  '11': "number11r.png"
+                  }
+
 
 
         # infinite loop
@@ -141,11 +241,15 @@ class MatrixDisplay:
             offscreen_canvas.Clear()
             if away:
                 away_score = away
-                length = graphics.DrawText(offscreen_canvas, scorefont, awayxpos, awayypos, hometextcolour, away_score)
+                #length = graphics.DrawText(offscreen_canvas, scorefont, awayxpos, awayypos, hometextcolour, away_score)
+                awayimage = Image.open(digits[away])
+                offscreen_canvas.SetImage(awayimage, 32,16)
 
             if home:
                 home_score = home
-                length = graphics.DrawText(offscreen_canvas, scorefont, homexpos, homeypos, awaytextcolour, home_score)
+                #length = graphics.DrawText(offscreen_canvas, scorefont, homexpos, homeypos, awaytextcolour, home_score)
+                homeimage = Image.open(digits[home])
+                offscreen_canvas.SetImage(homeimage, 0, 16)
 
             if direction == "clock":
                 t = datetime.datetime.now()
@@ -153,16 +257,29 @@ class MatrixDisplay:
                 length = graphics.DrawText(offscreen_canvas, clockfont, clockxpos, clockypos, clocktextcolour,
                                            clock_text)
             if direction == "down":
+                #TODO get the timer to stop at zero
                 t = clocktime - (datetime.datetime.now() - starttime)
+                currenttime = t
                 # add if timer < 2 mins pause
-                timer_text = t.strftime('%M:%S')
+                if t.hour == 0:
+                    timer_text = t.strftime('%M:%S')
+                else:
+                    timer_text = t.strftime('%H:%M:%S')
                 length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
                                            timer_text)
 
-            if direction == "paused":
-                # add capability to pause and restart the timer
+            if direction == "message":
+                length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, messagetextcolour,
+                                           messagetext)
 
-
+            if direction == "pause":
+                t = currenttime
+                if t.hour == 0:
+                    timer_text = t.strftime('%M:%S')
+                else:
+                    timer_text = t.strftime('%H:%M:%S')
+                length = graphics.DrawText(offscreen_canvas, clockfont, timerxpos, timerypos, timertextcolour,
+                                           timer_text)
 
             time.sleep(0.05)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
@@ -213,7 +330,7 @@ if __name__ == "__main__":
     mqttc = mqtt.Client()
     # Assign event callbacks
     mqttc.on_message = on_message
-    messagetxt = mqttc.on_message
+    message_raw = mqttc.on_message
     mqttc.on_connect = on_connect
     mqttc.on_subscribe = on_subscribe
     # Connect with MQTT Broker
