@@ -19,6 +19,7 @@ import config
 class MyMQTTClient(mqtt.Client):
 
     def run(self, host, port, keepalive_interval, topic):
+        print("trying to connect")
         self.connect(host, 1883, 45)
         self.subscribe(topic, 0)
         self.loop_start()
@@ -80,6 +81,7 @@ class DisplayWidget:
                                    displaycolour, text)
 
     def showimage(self, image, x, y):
+        print("entering showimage")
         self.parentdisplay.offscreen_canvas.SetImage(image, self.x + x, self.y + y)
 
     def fillwidget(self, colour):
@@ -89,7 +91,7 @@ class DisplayWidget:
 
     def displayscore(self):
         print("entering displayscore")
-        
+
         digits = {'0': "number0r.png",
                   '1': "number1r.png",
                   '2': "number2r.png",
@@ -151,6 +153,7 @@ if __name__ == "__main__":
                    config.mqtt['port'],
                    config.mqtt['keepalive_interval'],
                    config.mqtt['topic'])
+
     # initialise Matrix display
     sb_display = ScoreboardDisplay()
 
