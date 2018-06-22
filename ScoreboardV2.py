@@ -53,7 +53,7 @@ class ScoreboardDisplay:
         options.hardware_mapping = "adafruit-hat"
         options.disable_hardware_pulsing = True
         options.rows = 16
-        options.columns = 32
+        options.cols = 32
         options.chain_length = 4
         options.multiplexing = 8  # CORRECT value for 1/4 SCAN PANELS
 
