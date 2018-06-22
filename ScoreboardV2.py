@@ -11,7 +11,7 @@ from rgbmatrix import graphics
 from PIL import Image
 import time
 from datetime import datetime
-from dateutils import parser
+from dateutil import parser
 
 import config
 
