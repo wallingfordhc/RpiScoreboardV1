@@ -27,7 +27,7 @@ class MyMQTTClient(mqtt.Client):
     def on_connect(self, mosq, obj, rc):
         print("Connected to broker")
 
-    def on_subscribe(self, mosq, obj, mid, granted_qos):
+    def on_subscribe(mosq, obj, mid, granted_qos):
         print("Subscribed to topic: " + str(mid) + " with QoS: " + str(granted_qos))
 
     def on_message(self, mosq, obj, msg):
