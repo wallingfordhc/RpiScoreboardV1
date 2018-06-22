@@ -18,7 +18,7 @@ import config
 
 class MyMQTTClient(mqtt.Client):
 
-    def run(self, host, port, keepalive_interval, topic):
+    def start_connection(self, host, port, keepalive_interval, topic):
         print("trying to connect")
         self.connect(host, 1883, 45)
         self.subscribe(topic, 0)
@@ -147,12 +147,13 @@ if __name__ == "__main__":
 
     # initialise MQTT client
     print("welcome to the scoreboard")
+    print(config.mqtt['host'])
 
     mqttclient = MyMQTTClient()
-    mqttclient.run(config.mqtt['host'],
-                   config.mqtt['port'],
-                   config.mqtt['keepalive_interval'],
-                   config.mqtt['topic'])
+    mqttclient.start_connection(config.mqtt['host'],
+                                config.mqtt['port'],
+                                config.mqtt['keepalive_interval'],
+                                config.mqtt['topic'])
 
     # initialise Matrix display
     sb_display = ScoreboardDisplay()
