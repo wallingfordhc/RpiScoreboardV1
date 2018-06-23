@@ -86,19 +86,23 @@ class MyMQTTClient(mqtt.Client):
 
     def showscore(self, set_visibility):
         set_visibilityb = bool(set_visibility)
+        print(set_visibilityb)
         awayscorewidget.is_visible = set_visibilityb
         homescorewidget.is_visible = set_visibilityb
 
     def showtimer(self, set_visibility):
         set_visibilityb = bool(set_visibility)
+        print(set_visibilityb)
         timerwidget.is_visible = set_visibilityb
 
     def showclock(self, set_visibility):
         set_visibilityb = bool(set_visibility)
+        print(set_visibilityb)
         clockwidget.is_visible = set_visibilityb
 
     def showmessage(self, set_visibility):
         set_visibilityb = bool(set_visibility)
+        print(set_visibilityb)
         messagewidget.is_visible = set_visibilityb
 
     def settimer(self, timer_value):
@@ -166,7 +170,7 @@ class DisplayWidget:
                 self.parentdisplay.offscreen_canvas.SetPixel(i, j, colour, 0, 0)
 
     def displayscore(self):
-        print("entering displayscore")
+        # print("entering displayscore")
 
         digits = {'0': "imgs/number0r.png",
                   '1': "imgs/number1r.png",
@@ -189,7 +193,7 @@ class DisplayWidget:
         if self.is_visible:
             t = datetime.now()
             clocktext = t.strftime('%H:%M:%S')
-            print("showing clock" + clocktext)
+            # print("showing clock" + clocktext)
             displaycolour = graphics.Color(255, 0, 0)
             self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
@@ -250,21 +254,21 @@ if __name__ == "__main__":
 
 while True:
     sb_display.offscreen_canvas.Clear()
-    print("clear screen")
+    #print("clear screen")
 
     # clear the display
 
     # set active widgets
     homescorewidget.displayscore()
-    print("next")
+    #print("next")
     awayscorewidget.displayscore()
-    print("now the clock")
+    #print("now the clock")
     clockwidget.displayclock()
-    print("now the timer")
+    #print("now the timer")
     timerwidget.displaytimer()
-    print("now the heartbeat")
+    #print("now the heartbeat")
     heartbeatwidget.displayheartbeat()
-    print ("and a message?")
+    #print ("and a message?")
     messagewidget.displaymessage()
 
     # wait a short time
