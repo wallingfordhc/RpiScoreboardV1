@@ -200,8 +200,11 @@ class DisplayWidget:
             self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
+        print("timer set as")
         print(self.displaytime)
+        print("and due to start")
         print(self.starttime)
+        print("and time now")
         print(datetime.now())
         if self.is_visible:
             t = self.displaytime - (datetime.now() - self.starttime)
