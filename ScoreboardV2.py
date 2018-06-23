@@ -107,17 +107,18 @@ class MyMQTTClient(mqtt.Client):
 
     def settimer(self, timer_value):
         timerwidget.is_running = False
-        timerwidget.display_time = timer_value
+        timerwidget.displaytime = parser.parse(timer_value)
 
     def starttimer(self, timer_value):
         timerwidget.start_time = datetime.now()
         timerwidget.is_running = True
         if timer_value:
-            timerwidget.display_time = timer_value
+            timerwidget.displaytime = parser.parse(timer_value)
 
     def pausetimer(self, timer_value):
         timerwidget.is_running = False
-        timerwidget.display_time = timer_value
+        if timer_value:
+            timerwidget.displaytime = parser.parse(timer_value)
 
 
 
@@ -151,6 +152,7 @@ class DisplayWidget:
         self.displayfont = graphics.Font()
         self.displayfont.LoadFont("/home/pi/fonts/" + "8x13.bdf")
         self.starttime = datetime.now()
+        self.displaytime = datetime.now()
         self.status = "paused"
 
     def showtext(self, text, xx, yy, font, displaycolour):
@@ -161,7 +163,7 @@ class DisplayWidget:
                                    displaycolour, text)
 
     def showimage(self, image, xx, yy):
-        print("entering showimage")
+        #print("entering showimage")
         self.parentdisplay.offscreen_canvas.SetImage(image, self.x + xx, self.y + yy)
 
     def fillwidget(self, colour):
@@ -199,7 +201,7 @@ class DisplayWidget:
 
     def displaytimer(self):
         if self.is_visible:
-            t = parser.parse(self.content)
+            t = self.displaytime - (datetime.now() - self.starttime)
             if t.hour == 0:
                 timertext = t.strftime('%M:%S')
             else:
