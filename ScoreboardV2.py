@@ -165,7 +165,7 @@ if __name__ == "__main__":
     #clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
     #timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
     #messagewidget = DisplayWidget(sb_display, 4, 4, 64, 16, "Hello World")
-    heartbeatwidget = DisplayWidget(sb_display, 0, 0, 1, 1, "0")
+    heartbeatwidget = DisplayWidget(sb_display, 0, 0, 5, 5, "0")
 
 # loop
 
