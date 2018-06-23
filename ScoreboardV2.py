@@ -81,11 +81,13 @@ class DisplayWidget:
         self.content = content
         self.parentdisplay = parentdisplay
 
+        self.displayfont = graphics.Font()
+        self.displayfont.LoadFont("/home/pi/fonts/" + "8x13.bdf")
+
     def showtext(self, text, xx, yy, font, displaycolour):
-        displayfont = graphics.Font()
-        displayfont.LoadFont("/home/pi/fonts/" + font)
+
         length = graphics.DrawText(self.parentdisplay.offscreen_canvas,
-                                   displayfont,
+                                   self.displayfont,
                                    self.x + xx, self.y + yy,
                                    displaycolour, text)
 
@@ -93,7 +95,7 @@ class DisplayWidget:
         print("entering showimage")
         self.parentdisplay.offscreen_canvas.SetImage(image, self.x + xx, self.y + yy)
 
-     def fillwidget(self, colour):
+    def fillwidget(self, colour):
         for i in range(self.x, self.x + self.xwidth - 1):
             for j in range(self.y, self.y + self.ywidth - 1):
                 self.parentdisplay.offscreen_canvas.SetPixel(i, j, colour, 0, 0)
@@ -121,7 +123,7 @@ class DisplayWidget:
     def displayclock(self):
         t = datetime.now()
         clocktext = t.strftime('%H:%M:%S')
-        print("showing clock"+ clocktext)
+        print("showing clock" + clocktext)
         displaycolour = graphics.Color(255, 0, 0)
         self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
@@ -153,8 +155,6 @@ class DisplayWidget:
 
 # main function
 if __name__ == "__main__":
-    # initialise MQTT broker
-
     # initialise MQTT client
     print("welcome to the scoreboard")
     print(config.mqtt['host'])
