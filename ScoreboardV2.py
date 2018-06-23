@@ -121,6 +121,7 @@ class DisplayWidget:
     def displayclock(self):
         t = datetime.now()
         clocktext = t.strftime('%H:%M:%S')
+        print("showing clock"+ clocktext)
         displaycolour = graphics.Color(255, 0, 0)
         self.showtext(clocktext, 0, 0, "8x13.bdf", displaycolour)
 
