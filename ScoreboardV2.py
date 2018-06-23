@@ -88,7 +88,7 @@ class DisplayWidget:
     def fillwidget(self, colour):
         for i in range(self.x, self.x + self.xwidth - 1):
             for j in range(self.y, self.y + self.ywidth - 1):
-                self.parentdisplay.offscreen_canvas.SetPixel(i, j, colour, colour, colour)
+                self.parentdisplay.offscreen_canvas.SetPixel(i, j, colour, 0, 0)
 
     def displayscore(self):
         print("entering displayscore")
@@ -134,7 +134,7 @@ class DisplayWidget:
         # FLASH ALL PIXELS ONTHE WIDGET
         t = datetime.now()
         ms = t.microsecond
-        if ms % 1000 > 500:
+        if ms % 100 > 50:
             c = 255
         else:
             c = 0
@@ -165,7 +165,7 @@ if __name__ == "__main__":
     #clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
     #timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
     #messagewidget = DisplayWidget(sb_display, 4, 4, 64, 16, "Hello World")
-    heartbeatwidget = DisplayWidget(sb_display, 0, 0, 5, 5, "0")
+    heartbeatwidget = DisplayWidget(sb_display, 0, 0, 2, 2, "0")
 
 # loop
 
