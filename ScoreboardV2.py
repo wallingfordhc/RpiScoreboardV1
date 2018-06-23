@@ -46,6 +46,18 @@ class MyMQTTClient(mqtt.Client):
         if message_verb == "setmessage":
             self.setmessage(message_value)
 
+        if message_verb == "showscore":
+            self.showscore(message_value)
+
+        if message_verb == "showtimer":
+            self.showtimer(message_value)
+
+        if message_verb == "showclock":
+            self.showclock(message_value)
+
+        if message_verb == "showmessage":
+            self.showmessage(message_value)
+
 
         # TODO ADD MORE IF BRANCHES
 
@@ -58,6 +70,19 @@ class MyMQTTClient(mqtt.Client):
     def setmessage(self, message_text):
         messagewidget.content = message_text
 
+    def showscore(self, set_visibility):
+        
+        awayscorewidget.is_visible = set_visibility
+        homescorewidget.is_visible = set_visibility
+
+    def showtimer(self, set_visibility):
+        timerwidget.is_visible = set_visibility
+
+    def showclock(self, set_visibility):
+        clockwidget.is_visible = set_visibility
+
+    def showmessage(self, set_visibility):
+        messagewidget.is_visible = set_visibility
 
 
 
