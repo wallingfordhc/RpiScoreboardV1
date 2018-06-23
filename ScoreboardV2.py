@@ -37,6 +37,8 @@ class MyMQTTClient(mqtt.Client):
     def message_handler(self, msg):
         message_raw = msg.payload.decode("utf-8", "ignore")
         message_verb, message_value = message_raw.split(';')
+
+
         if message_verb == "homescore":
             self.homescore(message_value)
 
@@ -46,17 +48,29 @@ class MyMQTTClient(mqtt.Client):
         if message_verb == "setmessage":
             self.setmessage(message_value)
 
+
         if message_verb == "showscore":
             self.showscore(message_value)
 
         if message_verb == "showtimer":
             self.showtimer(message_value)
 
+        if message_verb == "settimer":
+            self.settimer(message_value)
+
+        if message_verb == "pausetimer":
+            self.pausetimer(message_value)
+
+        if message_verb == "starttimer":
+            self.starttimer(message_value)
+
         if message_verb == "showclock":
             self.showclock(message_value)
 
         if message_verb == "showmessage":
             self.showmessage(message_value)
+
+
 
 
         # TODO ADD MORE IF BRANCHES
@@ -71,18 +85,35 @@ class MyMQTTClient(mqtt.Client):
         messagewidget.content = message_text
 
     def showscore(self, set_visibility):
-        
-        awayscorewidget.is_visible = set_visibility
-        homescorewidget.is_visible = set_visibility
+        set_visibilityb = bool(set_visibility)
+        awayscorewidget.is_visible = set_visibilityb
+        homescorewidget.is_visible = set_visibilityb
 
     def showtimer(self, set_visibility):
-        timerwidget.is_visible = set_visibility
+        set_visibilityb = bool(set_visibility)
+        timerwidget.is_visible = set_visibilityb
 
     def showclock(self, set_visibility):
-        clockwidget.is_visible = set_visibility
+        set_visibilityb = bool(set_visibility)
+        clockwidget.is_visible = set_visibilityb
 
     def showmessage(self, set_visibility):
-        messagewidget.is_visible = set_visibility
+        set_visibilityb = bool(set_visibility)
+        messagewidget.is_visible = set_visibilityb
+
+    def settimer(self, timer_value):
+        timerwidget.is_running = False
+        timerwidget.display_time = timer_value
+
+    def starttimer(self, timer_value):
+        timerwidget.start_time = datetime.now()
+        timerwidget.is_running = True
+        if timer_value:
+            timerwidget.display_time = timer_value
+
+    def pausetimer(self, timer_value):
+        timerwidget.is_running = False
+        timerwidget.display_time = timer_value
 
 
 
@@ -115,6 +146,8 @@ class DisplayWidget:
 
         self.displayfont = graphics.Font()
         self.displayfont.LoadFont("/home/pi/fonts/" + "8x13.bdf")
+        self.starttime = datetime.now()
+        self.status = "paused"
 
     def showtext(self, text, xx, yy, font, displaycolour):
 
@@ -153,36 +186,39 @@ class DisplayWidget:
         self.showimage(scoreimage, 0, 0)
 
     def displayclock(self):
-        t = datetime.now()
-        clocktext = t.strftime('%H:%M:%S')
-        print("showing clock" + clocktext)
-        displaycolour = graphics.Color(255, 0, 0)
-        self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
+        if self.is_visible:
+            t = datetime.now()
+            clocktext = t.strftime('%H:%M:%S')
+            print("showing clock" + clocktext)
+            displaycolour = graphics.Color(255, 0, 0)
+            self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
-        t = parser.parse(self.content)
-        if t.hour == 0:
-            timertext = t.strftime('%M:%S')
-        else:
-            timertext = t.strftime('%H:%M:%S')
+        if self.is_visible:
+            t = parser.parse(self.content)
+            if t.hour == 0:
+                timertext = t.strftime('%M:%S')
+            else:
+                timertext = t.strftime('%H:%M:%S')
 
-        displaycolour = graphics.Color(255, 0, 0)
-        self.showtext(timertext, 0, 0, "8x13.bdf", displaycolour)
+            displaycolour = graphics.Color(255, 0, 0)
+            self.showtext(timertext, 0, 0, "8x13.bdf", displaycolour)
 
     def displaymessage(self):
-        displaycolour = graphics.Color(255, 255, 255)
-        self.showtext(self.content, 0, 0, "8x13.bdf", displaycolour)
+        if self.is_visible:
+            displaycolour = graphics.Color(255, 255, 255)
+            self.showtext(self.content, 0, 0, "8x13.bdf", displaycolour)
 
     def displayheartbeat(self):
-        # FLASH ALL PIXELS ONTHE WIDGET
-        t = datetime.now()
-        ms = t.microsecond
-        if ms % 1000 > 500:
-            c = 255
-        else:
-            c = 0
-
-        self.fillwidget(c)
+        if self.is_visible:
+            # FLASH ALL PIXELS ONTHE WIDGET
+            t = datetime.now()
+            ms = t.microsecond
+            if ms % 1000 > 500:
+                c = 255
+            else:
+                c = 0
+            self.fillwidget(c)
 
 
 
