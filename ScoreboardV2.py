@@ -202,12 +202,12 @@ class DisplayWidget:
                 timertext = t.strftime('%H:%M:%S')
 
             displaycolour = graphics.Color(255, 0, 0)
-            self.showtext(timertext, 0, 0, "8x13.bdf", displaycolour)
+            self.showtext(timertext, 0, 14, "8x13.bdf", displaycolour)
 
     def displaymessage(self):
         if self.is_visible:
             displaycolour = graphics.Color(255, 255, 255)
-            self.showtext(self.content, 0, 0, "8x13.bdf", displaycolour)
+            self.showtext(self.content, 0, 14, "8x13.bdf", displaycolour)
 
     def displayheartbeat(self):
         if self.is_visible:
