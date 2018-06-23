@@ -200,6 +200,9 @@ class DisplayWidget:
             self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
+        print(self.displaytime)
+        print(self.starttime)
+        print(datetime.now())
         if self.is_visible:
             t = self.displaytime - (datetime.now() - self.starttime)
             if t.hour == 0:
