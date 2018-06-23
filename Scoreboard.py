@@ -36,16 +36,13 @@ direction = "clock"
 messagetext = ""
 
 
-
-
-
-
 # Define on connect event function
 # We shall subscribe to our Topic in this function
 def on_connect(self, mosq, obj, rc):
     print("trying to subscribe")
     mqttc.subscribe(MQTT_TOPIC, 0)
     print("Connect on " + MQTT_HOST)
+
 
 def on_subscribe(mosq, obj, mid, granted_qos):
     print("Subscribed to Topic: " +

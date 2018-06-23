@@ -57,7 +57,7 @@ class MyMQTTClient(mqtt.Client):
 
     def setmessage(self, message_text):
         messagewidget.content = message_text
-        
+
 
 
 
@@ -110,18 +110,18 @@ class DisplayWidget:
     def displayscore(self):
         print("entering displayscore")
 
-        digits = {'0': "number0r.png",
-                  '1': "number1r.png",
-                  '2': "number2r.png",
-                  '3': "number3r.png",
-                  '4': "number4r.png",
-                  '5': "number5r.png",
-                  '6': "number6r.png",
-                  '7': "number7r.png",
-                  '8': "number8r.png",
-                  '9': "number9r.png",
-                  '10': "number10r.png",
-                  '11': "number11r.png"
+        digits = {'0': "imgs/number0r.png",
+                  '1': "imgs/number1r.png",
+                  '2': "imgs/number2r.png",
+                  '3': "imgs/number3r.png",
+                  '4': "imgs/number4r.png",
+                  '5': "imgs/number5r.png",
+                  '6': "imgs/number6r.png",
+                  '7': "imgs/number7r.png",
+                  '8': "imgs/number8r.png",
+                  '9': "imgs/number9r.png",
+                  '10': "imgs/number10r.png",
+                  '11': "imgs/number11r.png"
                   }
 
         scoreimage = Image.open(digits[self.content])
