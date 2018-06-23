@@ -40,10 +40,18 @@ class MyMQTTClient(mqtt.Client):
         if message_verb == "homescore":
             self.homescore(message_value)
 
+        if message_verb == "awayscore":
+            self.awayscore(message_value)
+
+
         # TODO ADD MORE IF BRANCHES
 
     def homescore(self, score):
         homescorewidget.content = score
+
+    def awayscore(self, score):
+        awayscorewidget.content = score
+
 
 
 class ScoreboardDisplay:
@@ -162,7 +170,7 @@ if __name__ == "__main__":
     # initialise screen widgets
     homescorewidget = DisplayWidget(sb_display, 0, 16, 32, 16, "0")
     awayscorewidget = DisplayWidget(sb_display, 32, 16, 32, 16, "2")
-    #clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
+    clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
     #timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
     #messagewidget = DisplayWidget(sb_display, 4, 4, 64, 16, "Hello World")
     heartbeatwidget = DisplayWidget(sb_display, 0, 0, 2, 2, "0")
@@ -181,7 +189,7 @@ while True:
     print("next")
     awayscorewidget.displayscore()
     print("now the clock")
-    #clockwidget.displayclock()
+    clockwidget.displayclock()
     print("now the timer")
     #timerwidget.displaytimer()
     print("now the heartbeat")
