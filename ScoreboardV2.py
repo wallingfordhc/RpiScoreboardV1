@@ -43,6 +43,9 @@ class MyMQTTClient(mqtt.Client):
         if message_verb == "awayscore":
             self.awayscore(message_value)
 
+        if message_verb == "setmessage":
+            self.setmessage(message_value)
+
 
         # TODO ADD MORE IF BRANCHES
 
@@ -51,6 +54,10 @@ class MyMQTTClient(mqtt.Client):
 
     def awayscore(self, score):
         awayscorewidget.content = score
+
+    def setmessage(self, message_text):
+        messagewidget.content = message_text
+        
 
 
 
@@ -145,12 +152,13 @@ class DisplayWidget:
         # FLASH ALL PIXELS ONTHE WIDGET
         t = datetime.now()
         ms = t.microsecond
-        if ms % 100 > 50:
+        if ms % 1000 > 500:
             c = 255
         else:
             c = 0
 
         self.fillwidget(c)
+
 
 
 # main function
@@ -170,10 +178,10 @@ if __name__ == "__main__":
 
     # initialise screen widgets
     homescorewidget = DisplayWidget(sb_display, 0, 16, 32, 16, "0")
-    awayscorewidget = DisplayWidget(sb_display, 32, 16, 32, 16, "2")
+    awayscorewidget = DisplayWidget(sb_display, 32, 16, 32, 16, "0")
     clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
-    #timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "10:09")
-    #messagewidget = DisplayWidget(sb_display, 4, 4, 64, 16, "Hello World")
+    timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "35:00")
+    messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16, "Hello Wallingford")
     heartbeatwidget = DisplayWidget(sb_display, 0, 0, 2, 2, "0")
 
 # loop
@@ -192,9 +200,11 @@ while True:
     print("now the clock")
     clockwidget.displayclock()
     print("now the timer")
-    #timerwidget.displaytimer()
+    timerwidget.displaytimer()
     print("now the heartbeat")
     heartbeatwidget.displayheartbeat()
+    print ("and a message?")
+    messagewidget.displaymessage()
 
     # wait a short time
     time.sleep(0.02)
