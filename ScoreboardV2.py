@@ -93,10 +93,10 @@ class DisplayWidget:
         print("entering showimage")
         self.parentdisplay.offscreen_canvas.SetImage(image, self.x + xx, self.y + yy)
 
-    def fillwidget(self, colour):
-        for i in range(self.x, self.x + self.xwidth - 1):
-            for j in range(self.y, self.y + self.ywidth - 1):
-                self.parentdisplay.offscreen_canvas.SetPixel(i, j, colour, 0, 0)
+    # def fillwidget(self, colour):
+     #   for i in range(self.x, self.x + self.xwidth - 1):
+      #      for j in range(self.y, self.y + self.ywidth - 1):
+        #        self.parentdisplay.offscreen_canvas.SetPixel(i, j, colour, 0, 0)
 
     def displayscore(self):
         print("entering displayscore")
@@ -148,7 +148,7 @@ class DisplayWidget:
         else:
             c = 0
 
-        self.fillwidget(c)
+        # self.fillwidget(c)
 
 
 # main function
