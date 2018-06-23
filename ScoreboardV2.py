@@ -123,7 +123,7 @@ class DisplayWidget:
         clocktext = t.strftime('%H:%M:%S')
         print("showing clock"+ clocktext)
         displaycolour = graphics.Color(255, 0, 0)
-        self.showtext(clocktext, 0, 0, "8x13.bdf", displaycolour)
+        self.showtext(clocktext, 5, 13, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
         t = parser.parse(self.content)
