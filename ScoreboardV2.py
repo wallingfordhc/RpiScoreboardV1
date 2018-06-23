@@ -123,7 +123,7 @@ class DisplayWidget:
         clocktext = t.strftime('%H:%M:%S')
         print("showing clock"+ clocktext)
         displaycolour = graphics.Color(255, 0, 0)
-        self.showtext(clocktext, 5, 13, "8x13.bdf", displaycolour)
+        self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
         t = parser.parse(self.content)
@@ -197,7 +197,7 @@ while True:
     heartbeatwidget.displayheartbeat()
 
     # wait a short time
-    time.sleep(2)
+    time.sleep(0.02)
 
     # refresh the display
     sb_display.offscreen_canvas = sb_display.matrix.SwapOnVSync(sb_display.offscreen_canvas)
