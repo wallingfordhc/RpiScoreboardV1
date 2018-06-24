@@ -124,15 +124,20 @@ class MyMQTTClient(mqtt.Client):
             print(parser.parse(timer_value))
         print("now")
         print(datetime.now())
+        print("timerlength")
         print(timerwidget.timerlength)
-        print(timerwidget.starttime)
+
         timerwidget.start_time = datetime.now()
-        timerwidget.is_running = True
+        print("timer starttime")
+        print(timerwidget.starttime)
 
         if timer_value:
             timerwidget.timerlength = parser.parse(timer_value)
         else:
             timerwidget.timerlength = timerwidget.displaytime
+        print("timer length now")
+        print(timerwidget.timerlength)
+        timerwidget.is_running = True
 
     def pausetimer(self, timer_value):
         print("start timer:")
