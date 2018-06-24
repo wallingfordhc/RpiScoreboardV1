@@ -114,7 +114,11 @@ class MyMQTTClient(mqtt.Client):
     def starttimer(self, timer_value):
         print("start timer:")
         print(timer_value)
+        print(parser.parse(timer_value))
+        print("now")
         print(datetime.now())
+        print(timerwidget.timerlength)
+        print(timerwidget.starttime)
         timerwidget.start_time = datetime.now()
         timerwidget.is_running = True
 
