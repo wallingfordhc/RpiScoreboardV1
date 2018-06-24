@@ -113,12 +113,12 @@ class MyMQTTClient(mqtt.Client):
         timerwidget.start_time = datetime.now()
         timerwidget.is_running = True
         if timer_value:
-            timerwidget.displaytime = parser.parse(timer_value)
+            timerwidget.timerlength = parser.parse(timer_value)
 
     def pausetimer(self, timer_value):
         timerwidget.is_running = False
         if timer_value:
-            timerwidget.displaytime = parser.parse(timer_value)
+            timerwidget.timerlength = parser.parse(timer_value)
 
 
 
@@ -152,7 +152,8 @@ class DisplayWidget:
         self.displayfont = graphics.Font()
         self.displayfont.LoadFont("/home/pi/fonts/" + "8x13.bdf")
         self.starttime = datetime.now()
-        self.displaytime = datetime.now()
+        self.displaytime = datetime.strptime('35:00', '%M:%S')
+        self.timerlength = datetime.strptime('35:00', '%M:%S')
         self.status = "paused"
 
     def showtext(self, text, xx, yy, font, displaycolour):
@@ -201,21 +202,23 @@ class DisplayWidget:
 
     def displaytimer(self):
         print("timer set as")
-        print(self.displaytime)
+        print(self.timerlength)
         print("and due to start")
         print(self.starttime)
         print("and time now")
         print(datetime.now())
         if self.is_visible:
-            t = self.displaytime - (datetime.now() - self.starttime)
-            if t.hour == 0:
-                timertext = t.strftime('%M:%S')
+            if self.is_running:
+                self.displaytime = self.timerlength - (datetime.now() - self.starttime)
+            if self.displaytime.hour == 0:
+                timertext = self.displaytime.strftime('%M:%S')
             else:
-                timertext = t.strftime('%H:%M:%S')
+                timertext = self.displaytime.strftime('%H:%M:%S')
 
             displaycolour = graphics.Color(255, 0, 0)
             self.showtext(timertext, 0, 14, "8x13.bdf", displaycolour)
-
+        else:
+            pass # dont show anything if its not visible
     def displaymessage(self):
         if self.is_visible:
             displaycolour = graphics.Color(255, 255, 255)
@@ -226,7 +229,7 @@ class DisplayWidget:
             # FLASH ALL PIXELS ONTHE WIDGET
             t = datetime.now()
             ms = t.microsecond
-            if ms % 1000 > 500:
+            if ms % 1000000 > 500000:
                 c = 255
             else:
                 c = 0
@@ -253,8 +256,8 @@ if __name__ == "__main__":
     homescorewidget = DisplayWidget(sb_display, 0, 16, 32, 16, "0")
     awayscorewidget = DisplayWidget(sb_display, 32, 16, 32, 16, "0")
     clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
-    timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "00:35:00")
-    messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16, "Hello Wallingford")
+    timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "00:35:00", False)
+    messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16, "Hello Wallingford", False)
     heartbeatwidget = DisplayWidget(sb_display, 0, 0, 2, 2, "0")
 
 # loop
