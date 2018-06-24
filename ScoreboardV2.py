@@ -107,6 +107,7 @@ class MyMQTTClient(mqtt.Client):
 
     def settimer(self, timer_value):
         timerwidget.is_running = False
+        timerwidget.timerlength = parser.parse(timer_value)
         timerwidget.displaytime = parser.parse(timer_value)
 
     def starttimer(self, timer_value):
