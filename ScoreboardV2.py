@@ -105,49 +105,26 @@ class MyMQTTClient(mqtt.Client):
         messagewidget.is_visible = set_visibilityb
 
     def settimer(self, timer_value):
-        print("start timer:")
-        print(timer_value)
-        if timer_value:
-            print(parser.parse(timer_value))
-        print("now")
-        print(datetime.now())
-        print(timerwidget.timerlength)
-        print(timerwidget.starttime)
+
         timerwidget.is_running = False
         timerwidget.timerlength = parser.parse(timer_value)
         timerwidget.displaytime = parser.parse(timer_value)
 
     def starttimer(self, timer_value):
-        print("start timer:")
-        print(timer_value)
-        if timer_value:
-            print(parser.parse(timer_value))
-        print("now")
-        print(datetime.now())
-        print("timerlength")
-        print(timerwidget.timerlength)
+
 
         timerwidget.starttime = datetime.now()
-        print("timer starttime")
-        print(timerwidget.starttime)
+
 
         if timer_value:
             timerwidget.timerlength = parser.parse(timer_value)
         else:
             timerwidget.timerlength = timerwidget.displaytime
-        print("timer length now")
-        print(timerwidget.timerlength)
+
         timerwidget.is_running = True
 
     def pausetimer(self, timer_value):
-        print("start timer:")
-        print(timer_value)
-        if timer_value:
-            print(parser.parse(timer_value))
-        print("now")
-        print(datetime.now())
-        print(timerwidget.timerlength)
-        print(timerwidget.starttime)
+
         timerwidget.is_running = False
         if timer_value:
             timerwidget.timerlength = parser.parse(timer_value)
@@ -234,7 +211,7 @@ class DisplayWidget:
             self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
-
+# TODO stop the timer at zero - or 2 mins or wheneber
         if self.is_visible:
             if self.is_running:
                 self.displaytime = self.timerlength - (datetime.now() - self.starttime)
@@ -284,7 +261,7 @@ if __name__ == "__main__":
     homescorewidget = DisplayWidget(sb_display, 0, 16, 32, 16, "0")
     awayscorewidget = DisplayWidget(sb_display, 32, 16, 32, 16, "0")
     clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
-    timerwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "00:35:00", False)
+    timerwidget = DisplayWidget(sb_display, 10, 0, 64, 16, "00:00:00", False)
     messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16, "Hello Wallingford", False)
     heartbeatwidget = DisplayWidget(sb_display, 0, 0, 2, 2, "0")
 
