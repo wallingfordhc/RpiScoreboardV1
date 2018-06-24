@@ -282,7 +282,7 @@ while True:
     messagewidget.displaymessage()
 
     # wait a short time
-    time.sleep(0.02)
+    time.sleep(0.5)
 
     # refresh the display
     sb_display.offscreen_canvas = sb_display.matrix.SwapOnVSync(sb_display.offscreen_canvas)
