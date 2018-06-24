@@ -105,8 +105,14 @@ class MyMQTTClient(mqtt.Client):
         messagewidget.is_visible = set_visibilityb
 
     def settimer(self, timer_value):
-        print("set timer:")
+        print("start timer:")
         print(timer_value)
+        if timer_value:
+            print(parser.parse(timer_value))
+        print("now")
+        print(datetime.now())
+        print(timerwidget.timerlength)
+        print(timerwidget.starttime)
         timerwidget.is_running = False
         timerwidget.timerlength = parser.parse(timer_value)
         timerwidget.displaytime = parser.parse(timer_value)
@@ -114,7 +120,8 @@ class MyMQTTClient(mqtt.Client):
     def starttimer(self, timer_value):
         print("start timer:")
         print(timer_value)
-        print(parser.parse(timer_value))
+        if timer_value:
+            print(parser.parse(timer_value))
         print("now")
         print(datetime.now())
         print(timerwidget.timerlength)
@@ -128,6 +135,14 @@ class MyMQTTClient(mqtt.Client):
             timerwidget.timerlength = timerwidget.displaytime
 
     def pausetimer(self, timer_value):
+        print("start timer:")
+        print(timer_value)
+        if timer_value:
+            print(parser.parse(timer_value))
+        print("now")
+        print(datetime.now())
+        print(timerwidget.timerlength)
+        print(timerwidget.starttime)
         timerwidget.is_running = False
         if timer_value:
             timerwidget.timerlength = parser.parse(timer_value)
