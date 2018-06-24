@@ -148,6 +148,7 @@ class DisplayWidget:
         self.is_visible = is_visible
         self.content = content
         self.parentdisplay = parentdisplay
+        self.is_running = False
 
         self.displayfont = graphics.Font()
         self.displayfont.LoadFont("/home/pi/fonts/" + "8x13.bdf")
@@ -236,7 +237,6 @@ class DisplayWidget:
             self.fillwidget(c)
 
 
-
 # main function
 if __name__ == "__main__":
     # initialise MQTT client
@@ -265,21 +265,21 @@ if __name__ == "__main__":
 
 while True:
     sb_display.offscreen_canvas.Clear()
-    #print("clear screen")
+    # print("clear screen")
 
     # clear the display
 
     # set active widgets
     homescorewidget.displayscore()
-    #print("next")
+    # print("next")
     awayscorewidget.displayscore()
-    #print("now the clock")
+    # print("now the clock")
     clockwidget.displayclock()
-    #print("now the timer")
+    # print("now the timer")
     timerwidget.displaytimer()
-    #print("now the heartbeat")
+    # print("now the heartbeat")
     heartbeatwidget.displayheartbeat()
-    #print ("and a message?")
+    # print ("and a message?")
     messagewidget.displaymessage()
 
     # wait a short time
@@ -287,6 +287,5 @@ while True:
 
     # refresh the display
     sb_display.offscreen_canvas = sb_display.matrix.SwapOnVSync(sb_display.offscreen_canvas)
-
 
     # repeat
