@@ -127,7 +127,7 @@ class MyMQTTClient(mqtt.Client):
         print("timerlength")
         print(timerwidget.timerlength)
 
-        timerwidget.start_time = datetime.now()
+        timerwidget.starttime = datetime.now()
         print("timer starttime")
         print(timerwidget.starttime)
 
