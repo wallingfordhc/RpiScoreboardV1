@@ -48,7 +48,6 @@ class MyMQTTClient(mqtt.Client):
         if message_verb == "setmessage":
             self.setmessage(message_value)
 
-
         if message_verb == "showscore":
             self.showscore(message_value)
 
@@ -113,8 +112,11 @@ class MyMQTTClient(mqtt.Client):
     def starttimer(self, timer_value):
         timerwidget.start_time = datetime.now()
         timerwidget.is_running = True
+
         if timer_value:
             timerwidget.timerlength = parser.parse(timer_value)
+        else:
+            timerwidget.timerlength = timerwidget.displaytime
 
     def pausetimer(self, timer_value):
         timerwidget.is_running = False
@@ -203,12 +205,7 @@ class DisplayWidget:
             self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
-        print("timer set as")
-        print(self.timerlength)
-        print("and due to start")
-        print(self.starttime)
-        print("and time now")
-        print(datetime.now())
+
         if self.is_visible:
             if self.is_running:
                 self.displaytime = self.timerlength - (datetime.now() - self.starttime)
@@ -220,7 +217,8 @@ class DisplayWidget:
             displaycolour = graphics.Color(255, 0, 0)
             self.showtext(timertext, 0, 14, "8x13.bdf", displaycolour)
         else:
-            pass # dont show anything if its not visible
+            pass  # dont show anything if its not visible
+
     def displaymessage(self):
         if self.is_visible:
             displaycolour = graphics.Color(255, 255, 255)
