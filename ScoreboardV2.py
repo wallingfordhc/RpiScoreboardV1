@@ -173,7 +173,9 @@ class DisplayWidget:
 
     def showtext(self, text, xx, yy, font, displaycolour):
 
-        messagelength = len(text)*self.displayfont.CharacterWidth()
+        messagelength = 0
+        for character in text:
+            messagelength += self.displayfont.CharacterWidth(character)
         length = graphics.DrawText(self.parentdisplay.offscreen_canvas,
                                    self.displayfont,
                                    self.x + xx, self.y + yy,
