@@ -172,14 +172,19 @@ class DisplayWidget:
         self.scrollstatus = "stopped"
 
     def showtext(self, text, xx, yy, font, displaycolour):
-
+        xpos = 0
         messagelength = 0
         for character in text:
             messagelength += self.displayfont.CharacterWidth(ord(character))
+        # if the message is longer than the widget - start it off the screen and scroll all the way to the end in the time set by scrollspeed
+        if messagelength > self.xwidth:
+            elapsedseconds = (datetime.now()-self.starttime).total_seconds()
+            xpos = self.xwidth - (elapsedseconds % self.scrollspeed)*((self.xwidth+messagelength) / self.scrollspeed)
+
         length = graphics.DrawText(self.parentdisplay.offscreen_canvas,
                                    self.displayfont,
-                                   self.x + xx, self.y + yy,
-                                   displaycolour, str(messagelength))
+                                   self.x + xx + xpos, self.y + yy,
+                                   displaycolour, text)
 
     def showimage(self, image, xx, yy):
         #print("entering showimage")
