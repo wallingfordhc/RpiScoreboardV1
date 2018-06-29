@@ -168,7 +168,7 @@ class DisplayWidget:
         self.displaytime = datetime.strptime('35:00', '%M:%S')
         self.timerlength = datetime.strptime('35:00', '%M:%S')
         self.status = "paused"
-        self.scrollspeed = 5
+        self.scrollspeed = 10
         self.scrollstatus = "stopped"
 
     def showtext(self, text, xx, yy, font, displaycolour):
@@ -301,7 +301,7 @@ while True:
     messagewidget.displaymessage()
 
     # wait a short time
-    # time.sleep(0.02)
+    #  time.sleep(0.02)
 
     # refresh the display
     sb_display.offscreen_canvas = sb_display.matrix.SwapOnVSync(sb_display.offscreen_canvas)
