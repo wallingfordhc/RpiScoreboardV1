@@ -69,6 +69,9 @@ class MyMQTTClient(mqtt.Client):
         if message_verb == "showmessage":
             self.showmessage(message_value)
 
+        if message_verb == "scrollspeed":
+            self.setscrollspeed(message_value)
+
 
 
 
@@ -165,13 +168,16 @@ class DisplayWidget:
         self.displaytime = datetime.strptime('35:00', '%M:%S')
         self.timerlength = datetime.strptime('35:00', '%M:%S')
         self.status = "paused"
+        self.scrollspeed = 5
+        self.scrollstatus = "stopped"
 
     def showtext(self, text, xx, yy, font, displaycolour):
 
+        messagelength = len(text)*self.displayfont.CharacterWidth()
         length = graphics.DrawText(self.parentdisplay.offscreen_canvas,
                                    self.displayfont,
                                    self.x + xx, self.y + yy,
-                                   displaycolour, text)
+                                   displaycolour, messagelength)
 
     def showimage(self, image, xx, yy):
         #print("entering showimage")
@@ -261,7 +267,7 @@ if __name__ == "__main__":
     homescorewidget = DisplayWidget(sb_display, 0, 16, 32, 16, "0")
     awayscorewidget = DisplayWidget(sb_display, 32, 16, 32, 16, "0")
     clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
-    timerwidget = DisplayWidget(sb_display, 10, 0, 64, 16, "00:00:00", False)
+    timerwidget = DisplayWidget(sb_display, 14, -2, 64, 16, "00:00:00", False)
     messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16, "Hello Wallingford", False)
     heartbeatwidget = DisplayWidget(sb_display, 0, 0, 2, 2, "0")
 
