@@ -179,7 +179,7 @@ class DisplayWidget:
         length = graphics.DrawText(self.parentdisplay.offscreen_canvas,
                                    self.displayfont,
                                    self.x + xx, self.y + yy,
-                                   displaycolour, messagelength)
+                                   displaycolour, str(messagelength))
 
     def showimage(self, image, xx, yy):
         #print("entering showimage")
