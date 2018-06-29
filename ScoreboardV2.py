@@ -175,7 +175,7 @@ class DisplayWidget:
 
         messagelength = 0
         for character in text:
-            messagelength += self.displayfont.CharacterWidth(character)
+            messagelength += self.displayfont.CharacterWidth(ord(character))
         length = graphics.DrawText(self.parentdisplay.offscreen_canvas,
                                    self.displayfont,
                                    self.x + xx, self.y + yy,
