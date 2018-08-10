@@ -2,7 +2,7 @@
 #
 # Scoreboard created originally for Wallingford Hockey Club - June 2018
 #
-# v.0.2
+# v.0.3
 # author d.shannon
 # 
 import paho.mqtt.client as mqtt
