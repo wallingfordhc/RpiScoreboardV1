@@ -248,7 +248,7 @@ class DisplayWidget:
             # FLASH ALL PIXELS ONTHE WIDGET
             t = datetime.now()
             ms = t.microsecond
-            if ms % 1000000 > 500000:
+            if ms % 1000000 > 400000:
                 c = 255
             else:
                 c = 0
