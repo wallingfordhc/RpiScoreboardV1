@@ -233,8 +233,7 @@ class DisplayWidget:
                 timertext = self.displaytime.strftime('%M:%S')
             else:
                 timertext = self.displaytime.strftime('%H:%M:%S')
-
-            displaycolour = graphics.Color(255, 0, 0)
+            displaycolour = graphics.Color(255, 255, 255) # set timer colour to white
             self.showtext(timertext, 0, 14, "8x13.bdf", displaycolour)
         else:
             pass  # don't show anything if its not visible
