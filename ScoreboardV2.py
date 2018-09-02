@@ -224,10 +224,11 @@ class DisplayWidget:
             self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
-    # TODO stop the timer at zero - or 2 mins or wheneber
         if self.is_visible:
             if self.is_running:
                 self.displaytime = self.timerlength - (datetime.now() - self.starttime)
+            if self.displaytime <= 0:
+                self.displaytime = 0
             if self.displaytime.hour == 0:
                 timertext = self.displaytime.strftime('%M:%S')
             else:
@@ -236,7 +237,7 @@ class DisplayWidget:
             displaycolour = graphics.Color(255, 0, 0)
             self.showtext(timertext, 0, 14, "8x13.bdf", displaycolour)
         else:
-            pass  # dont show anything if its not visible
+            pass  # don't show anything if its not visible
 
     def displaymessage(self):
         if self.is_visible:
