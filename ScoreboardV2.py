@@ -227,8 +227,8 @@ class DisplayWidget:
         if self.is_visible:
             if self.is_running:
                 self.displaytime = self.timerlength - (datetime.now() - self.starttime)
-            if self.displaytime <= 0:
-                self.displaytime = 0
+            if self.displaytime <= (datetime.now()-datetime.now()):
+                self.displaytime = self.displaytime.replace(hour=0, minute=0, second=0)
             if self.displaytime.hour == 0:
                 timertext = self.displaytime.strftime('%M:%S')
             else:
