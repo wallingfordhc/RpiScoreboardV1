@@ -40,7 +40,6 @@ class MyMQTTClient(mqtt.Client):
         message_raw = msg.payload.decode("utf-8", "ignore")
         message_verb, message_value = message_raw.split(';')
 
-
         if message_verb == "homescore":
             self.homescore(message_value)
 
@@ -74,15 +73,18 @@ class MyMQTTClient(mqtt.Client):
         if message_verb == "scrollspeed":
             self.setscrollspeed(message_value)
 
-
-
-
         # TODO ADD MORE IF BRANCHES
 
     def homescore(self, score):
+        # dont let the score be negative
+        if score < 0:
+            score = 0
         homescorewidget.content = score
 
     def awayscore(self, score):
+        # dont let the score be negative
+        if score < 0:
+            score = 0
         awayscorewidget.content = score
 
     def setmessage(self, message_text):
@@ -117,9 +119,7 @@ class MyMQTTClient(mqtt.Client):
 
     def starttimer(self, timer_value):
 
-
         timerwidget.starttime = datetime.now()
-
 
         if timer_value:
             timerwidget.timerlength = parser.parse(timer_value)
@@ -133,8 +133,6 @@ class MyMQTTClient(mqtt.Client):
         timerwidget.is_running = False
         if timer_value:
             timerwidget.timerlength = parser.parse(timer_value)
-
-
 
 class ScoreboardDisplay:
 
@@ -151,6 +149,7 @@ class ScoreboardDisplay:
 
         self.matrix = RGBMatrix(options=options)
         self.offscreen_canvas = self.matrix.CreateFrameCanvas()
+
 
 class DisplayWidget:
 
@@ -178,7 +177,8 @@ class DisplayWidget:
         messagelength = 0
         for character in text:
             messagelength += self.displayfont.CharacterWidth(ord(character))
-        # if the message is longer than the widget - start it off the screen and scroll all the way to the end in the time set by scrollspeed
+        # if the message is longer than the widget - start it off the screen
+        # and scroll all the way to the end in the time set by scrollspeed
         if messagelength > self.xwidth:
             elapsedseconds = (datetime.now()-self.starttime).total_seconds()
             xpos = self.xwidth - (elapsedseconds % self.scrollspeed)*((self.xwidth+messagelength) / self.scrollspeed)
@@ -189,7 +189,6 @@ class DisplayWidget:
                                    displaycolour, text)
 
     def showimage(self, image, xx, yy):
-        #print("entering showimage")
         self.parentdisplay.offscreen_canvas.SetImage(image, self.x + xx, self.y + yy)
 
     def fillwidget(self, colour):
@@ -198,7 +197,6 @@ class DisplayWidget:
                 self.parentdisplay.offscreen_canvas.SetPixel(i, j, colour, 0, 0)
 
     def displayscore(self):
-        # print("entering displayscore")
 
         digits = {'0': "imgs/number0r.png",
                   '1': "imgs/number1r.png",
@@ -226,7 +224,7 @@ class DisplayWidget:
             self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
 
     def displaytimer(self):
-# TODO stop the timer at zero - or 2 mins or wheneber
+    # TODO stop the timer at zero - or 2 mins or wheneber
         if self.is_visible:
             if self.is_running:
                 self.displaytime = self.timerlength - (datetime.now() - self.starttime)
