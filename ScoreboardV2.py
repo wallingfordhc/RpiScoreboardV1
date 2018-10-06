@@ -164,7 +164,7 @@ class DisplayWidget:
         self.is_running = False
 
         self.displayfont = graphics.Font()
-        self.displayfont.LoadFont("/home/pi/fonts/" + "8x13.bdf")
+        self.displayfont.LoadFont("/home/pi/fonts/" + "10x20.bdf")
         self.starttime = datetime.now()
         self.displaytime = datetime.strptime('35:00', '%M:%S')
         self.timerlength = datetime.strptime('35:00', '%M:%S')
