@@ -77,14 +77,14 @@ class MyMQTTClient(mqtt.Client):
 
     def homescore(self, score):
         # dont let the score be negative
-        if score < 0:
-            score = 0
+        if int(score) < 0:
+            score = '0'
         homescorewidget.content = score
 
     def awayscore(self, score):
         # dont let the score be negative
-        if score < 0:
-            score = 0
+        if int(score) < 0:
+            score = '0'
         awayscorewidget.content = score
 
     def setmessage(self, message_text):
@@ -165,6 +165,7 @@ class DisplayWidget:
 
         self.displayfont = graphics.Font()
         self.displayfont.LoadFont("/home/pi/fonts/" + "10x20.bdf")
+        self.fontwidth = 10
         self.starttime = datetime.now()
         self.displaytime = datetime.strptime('35:00', '%M:%S')
         self.timerlength = datetime.strptime('35:00', '%M:%S')
@@ -176,7 +177,8 @@ class DisplayWidget:
         xpos = 0
         messagelength = 0
         for character in text:
-            messagelength += self.displayfont.CharacterWidth(ord(character))
+            messagelength += self.fontwidth
+            # messagelength += self.displayfont.CharacterWidth(ord(character))
         # if the message is longer than the widget - start it off the screen
         # and scroll all the way to the end in the time set by scrollspeed
         if messagelength > self.xwidth:
@@ -227,14 +229,14 @@ class DisplayWidget:
         if self.is_visible:
             if self.is_running:
                 self.displaytime = self.timerlength - (datetime.now() - self.starttime)
-            if self.displaytime <= (datetime.now()-datetime.now()):
+            if self.displaytime <= datetime.now().replace(hour=0, minute=0, second=0):
                 self.displaytime = self.displaytime.replace(hour=0, minute=0, second=0)
             if self.displaytime.hour == 0:
                 timertext = self.displaytime.strftime('%M:%S')
             else:
                 timertext = self.displaytime.strftime('%H:%M:%S')
             displaycolour = graphics.Color(255, 255, 255) # set timer colour to white
-            self.showtext(timertext, 0, 14, "9x15.bdf", displaycolour)
+            self.showtext(timertext, 0, 16, "9x15.bdf", displaycolour)
         else:
             pass  # don't show anything if its not visible
 
