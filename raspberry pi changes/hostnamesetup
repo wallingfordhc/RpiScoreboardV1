@@ -1,0 +1,11 @@
+in
+
+/etc/hosts 
+
+change raspberrypi to scoreboard
+
+in
+
+/etc/hostname
+
+change raspberrypi to scoreboard
