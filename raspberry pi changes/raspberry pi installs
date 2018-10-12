@@ -3,3 +3,5 @@ git
 flask
 mosquitto - update mosquitto.conf to include websockets
 mosquitto client
+sudo apt-get install python-smbus i2c-tools
+
