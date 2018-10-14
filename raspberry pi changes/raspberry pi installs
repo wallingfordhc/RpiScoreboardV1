@@ -1,7 +1,25 @@
-pip
-git
-flask
-mosquitto - update mosquitto.conf to include websockets
-mosquitto client
+# make sure we have the lastest raspberry OS
+
+sudo apt-get update
+sudo apt-get upgrade
+
+# install hostapd
+
+sudo apt-get install hostapd
+
+ensure the following are installed
+# git to allow easier updates to the software
+# pip to allow install of other python packages
+
+# flask - potential webserver instead of apache
+
+# mosquitto - 
+sudo apt-get install mosquitto mosquitto-clients
+# pyton connectivity to mosquitto
+sudo pip install paho-mqtt
+#update mosquitto.conf to include websockets
+# mosquitto client
+
+# to allow access to the RTC on the adafruit hat
 sudo apt-get install python-smbus i2c-tools
 
