@@ -16,6 +16,7 @@ The installers will have set up the programme so they run when the pi is started
 sudo systemctl disable hostapd
 sudo systemctl disable dnsmasq
 
+And follow instructyion on www.raspberryconnect.com for setting up raspberry pi as hotspot if no wifi is found
 
 
 ensure the following are installed
