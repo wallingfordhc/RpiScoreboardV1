@@ -7,6 +7,17 @@ sudo apt-get upgrade
 
 sudo apt-get install hostapd
 
+#install dnsmasq
+
+sudo apt-get install dnsmasq
+
+The installers will have set up the programme so they run when the pi is started. For this setup they only need to be started if the home router is not found. So automatic startup needs to be disabled. This is done with the following commands:
+
+sudo systemctl disable hostapd
+sudo systemctl disable dnsmasq
+
+
+
 ensure the following are installed
 # git to allow easier updates to the software
 # pip to allow install of other python packages
