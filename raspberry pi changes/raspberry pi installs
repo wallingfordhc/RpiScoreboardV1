@@ -1,5 +1,80 @@
-pip
-git
-flask
-mosquitto - update mosquitto.conf to include websockets
-mosquitto client
+# make sure we have the lastest raspberry OS
+
+sudo apt-get update
+sudo apt-get upgrade
+
+# install hostapd
+
+sudo apt-get install hostapd
+
+#install dnsmasq
+
+sudo apt-get install dnsmasq
+
+The installers will have set up the programme so they run when the pi is started. For this setup they only need to be started if the home router is not found. So automatic startup needs to be disabled. This is done with the following commands:
+
+sudo systemctl disable hostapd
+sudo systemctl disable dnsmasq
+
+And follow instructyion on www.raspberryconnect.com for setting up raspberry pi as hotspot if no wifi is found
+http://www.raspberryconnect.com/network/item/331-raspberry-pi-auto-wifi-hotspot-switch-direct-connection
+
+sudo nano /etc/dnsmasq.conf
+
+Go to the bottom of the file and add the following lines (download here)
+
+
+#AutoHotspot Config
+#stop DNSmasq from using resolv.conf
+no-resolv
+#Interface to use
+interface=wlan0
+bind-interfaces
+dhcp-range=10.0.0.50,10.0.0.150,12h
+
+
+Open dhcpcd.conf with the command
+
+sudo nano /etc/dhcpcd.conf
+
+at the bottom of the file enter the line
+
+nohook wpa_supplicant
+
+autohotspot service file
+Next we have to create a service which will run the autohotspot script when the Raspberry Pi starts up.
+
+create a new file with the command
+
+sudo nano /etc/systemd/system/autohotspot.service
+
+Then enter the following text or download here
+
+
+[Unit]
+Description=Automatically generates an internet Hotspot when a valid ssid is not in range
+After=multi-user.target
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/autohotspot
+[Install]
+WantedBy=multi-user.target
+
+
+ensure the following are installed
+# git to allow easier updates to the software
+# pip to allow install of other python packages
+
+# flask - potential webserver instead of apache
+
+# mosquitto - 
+sudo apt-get install mosquitto mosquitto-clients
+# pyton connectivity to mosquitto
+sudo pip install paho-mqtt
+#update mosquitto.conf to include websockets
+# mosquitto client
+
+# to allow access to the RTC on the adafruit hat
+sudo apt-get install python-smbus i2c-tools
+
