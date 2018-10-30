@@ -22,7 +22,7 @@ class MyMQTTClient(mqtt.Client):
 
     def start_connection(self, host, port, keepalive_interval, topic):
         print("trying to connect")
-        self.connect(host, 1883, 45)
+        self.connect(host, 1883, 25)
         self.subscribe(topic, 0)
         self.loop_start()
 
@@ -220,7 +220,7 @@ class DisplayWidget:
     def displayclock(self):
         if self.is_visible:
             t = datetime.now()
-            clocktext = t.strftime('%H:%M:%S')
+            clocktext = t.strftime('%H:%M')
             # print("showing clock" + clocktext)
             displaycolour = graphics.Color(255, 0, 0)
             self.showtext(clocktext, 0, 13, "8x13.bdf", displaycolour)
