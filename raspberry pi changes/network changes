@@ -1,6 +1,14 @@
 network changes
 
+Setup raspberry pi to work headlessly by connecting to external wifi
+
+https://core-electronics.com.au/tutorials/raspberry-pi-zerow-headless-wifi-setup.html
+
 setup raspberry pi as a hotspot
 
 https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md
+
+Setup pi to turn on hotspot if other wifi not found
+
+http://www.raspberryconnect.com/network/item/330-raspberry-pi-auto-wifi-hotspot-switch-internet
 
