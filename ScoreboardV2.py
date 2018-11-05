@@ -79,6 +79,10 @@ class MyMQTTClient(mqtt.Client):
         # dont let the score be negative
         if int(score) < 0:
             score = '0'
+
+        # dont let the score be double digit
+        if int(score) > 9:
+            score = '9'
         homescorewidget.content = score
 
     def awayscore(self, score):
@@ -86,6 +90,10 @@ class MyMQTTClient(mqtt.Client):
         if int(score) < 0:
             score = '0'
         awayscorewidget.content = score
+
+        # dont let the score be double digit
+        if int(score) > 9:
+            score = '9'
 
     def setmessage(self, message_text):
         messagewidget.content = message_text
