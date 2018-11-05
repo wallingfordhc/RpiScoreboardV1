@@ -12,3 +12,11 @@ Setup pi to turn on hotspot if other wifi not found
 
 http://www.raspberryconnect.com/network/item/330-raspberry-pi-auto-wifi-hotspot-switch-internet
 
+set up DHCP and DNS
+
+Set up a static IP for the raspberry pi
+
+Add the name of the scoreboard to point to the IP
+192.168.1.92 scoreboard
+192.168.1.92 whc.scoreboard
+

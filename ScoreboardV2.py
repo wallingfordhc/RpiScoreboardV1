@@ -15,7 +15,6 @@ from dateutil import parser
 
 import config
 
-# does this firce an analysis
 
 
 class MyMQTTClient(mqtt.Client):

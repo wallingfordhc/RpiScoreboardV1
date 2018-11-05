@@ -9,7 +9,7 @@ idea is that the pi Zero will act a wireless hot spot and receive MQTT messages 
 
 current working version is ScorebordV2.py
 
-refectored now I know a bit more about OOP into Scoreboard2.py
+refactored now I know a bit more about OOP into Scoreboard2.py
 
 Mosquito MQTT broker running on the Pi0
 Scoreboard2.py looks for messages and updates the screen when they are received
