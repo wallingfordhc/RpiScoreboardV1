@@ -283,7 +283,7 @@ if __name__ == "__main__":
     # initialise screen widgets
     homescorewidget = DisplayWidget(sb_display, 0, 16, 32, 16, "0")
     awayscorewidget = DisplayWidget(sb_display, 32, 16, 32, 16, "0")
-    clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00")
+    clockwidget = DisplayWidget(sb_display, 0, 0, 64, 16, "12:00", False)
     timerwidget = DisplayWidget(sb_display, 14, -2, 64, 16, "00:00:00", False)
     messagewidget = DisplayWidget(sb_display, 0, 0, 64, 16, "Hello Wallingford", False)
     heartbeatwidget = DisplayWidget(sb_display, 0, 0, 2, 2, "0")
