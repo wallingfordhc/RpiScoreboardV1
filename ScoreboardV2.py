@@ -72,6 +72,9 @@ class MyMQTTClient(mqtt.Client):
 
         if message_verb == "scrollspeed":
             self.setscrollspeed(message_value)
+            
+        if message_verb == "setbrightness":
+            self.setbrightness(message_value)
 
         # TODO ADD MORE IF BRANCHES
 
@@ -151,6 +154,8 @@ class ScoreboardDisplay:
         options.disable_hardware_pulsing = True
         options.rows = 16
         options.cols = 32
+        # set default brightess to 50% to protect against power spike at turn on
+        options.brightness = 50
         options.chain_length = 4
         options.pixel_mapper_config = "U-mapper"
         options.multiplexing = 8  # CORRECT value for 1/4 SCAN PANELS
