@@ -75,6 +75,7 @@ class MyMQTTClient(mqtt.Client):
             
         if message_verb == "setbrightness":
             self.setbrightness(message_value)
+            
 
         # TODO ADD MORE IF BRANCHES
 
@@ -144,6 +145,14 @@ class MyMQTTClient(mqtt.Client):
         timerwidget.is_running = False
         if timer_value:
             timerwidget.timerlength = parser.parse(timer_value)
+            
+            
+    def setbrightness(self, brightness_value):
+        if brightness_value > 100:
+            brightness_value = 100
+            
+        if brightness_value < 0:
+            brightness_value = 0
 
 class ScoreboardDisplay:
 
