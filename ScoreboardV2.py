@@ -2,6 +2,8 @@
 #
 # Scoreboard created originally for Wallingford Hockey Club - June 2018
 #
+# updated JAN 2019
+#
 # v.0.3
 # author d.shannon
 # 
